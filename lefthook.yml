@@ -1,0 +1,31 @@
+# Local Hooks — 执行层 Enforcement
+# 原则: Success is silent; failures are verbose
+# 安装: npx lefthook install (或 brew install evilmartians/lefthook/lefthook)
+
+pre-commit:
+  parallel: true
+  commands:
+    check-agents-md-size:
+      run: bash scripts/check-agents-md.sh
+      tags: [harness, agents]
+
+    forbid-destructive-in-diff:
+      run: bash scripts/forbid-destructive.sh
+      tags: [safety]
+
+    lint-markdown:
+      glob: "*.md"
+      run: npx markdownlint-cli2 {staged_files} 2>/dev/null || echo "ℹ️ markdownlint-cli2 not installed, skipping"
+      tags: [style]
+
+commit-msg:
+  commands:
+    check-conventional-commit:
+      run: |
+        MSG=$(cat {1})
+        if ! echo "$MSG" | grep -qE '^(feat|fix|docs|style|refactor|test|chore|ci|revert)(\(.+\))?: .+'; then
+          echo "❌ Commit message must follow Conventional Commits"
+          echo "   Example: feat(auth): add login endpoint"
+          exit 1
+        fi
+      tags: [style]
