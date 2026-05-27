@@ -55,5 +55,5 @@ AI 在 `verification-before-completion` 阶段必须呈现以下证据：
 
 - **生命周期详解**: `docs/superpowers/lifecycle.md`
 - **Issue/PR 最佳实践**: `docs/superpowers/tips.md`
-- **Worktree 管理**: `scripts/worktree-manager.sh` (或 `.ps1`)
+- **Worktree 管理**: `activate_skill using-git-worktrees` (superpowers skill)
 - **Harness 调研上下文**: `docs/superpowers/handoffs/harness-engineering-research-2026-05-27.md`

@@ -18,9 +18,12 @@ gh issue create --title "标题" --body "## 内容..."
 
 ## Worktree 快速命令
 
+本项目使用 **superpowers `using-git-worktrees` skill** 管理 worktree。Agent 会自动按规范执行。
+
+如需手动操作，项目命名规范为：
 ```bash
 # 创建隔离工作区
-git worktree add ../<repo>-issue-N -b issue-N
+git worktree add ../<repo>-issue-N -b issue-N-feature-name
 
 # 进入工作区工作
 cd ../<repo>-issue-N
@@ -28,8 +31,6 @@ cd ../<repo>-issue-N
 # 完成后清理
 git worktree remove ../<repo>-issue-N
 ```
-
-详细管理见 `scripts/worktree-manager.sh`（或 `.ps1`）。
 
 ## 破坏性操作 checklist
 
