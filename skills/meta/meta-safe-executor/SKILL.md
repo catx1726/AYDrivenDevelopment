@@ -23,8 +23,10 @@ description: Use when performing write operations (CREATE, UPDATE, DELETE, MOVE)
 ### 0. Mandatory Pre-Write Protocol (Audit Lock)
 **在执行任何写操作 (`write_file`, `replace`, `run_shell_command` 修改文件) 之前，AI 必须物理执行：**
 1.  **READ-LOG**: `read_file .gemini/ops_changelog.md` 确认审计表已就绪。
-2.  **PHYSICAL LOG**: 追加操作意图到 `.gemini/ops_changelog.md`。
-3.  **VERIFY**: 确认日志持久化后再进行后续动作。
+2.  **BACKUP**: `cp .gemini/ops_changelog.md .gemini/ops_changelog.md.bak`（防清空保护）。
+3.  **PHYSICAL LOG**: 使用 append 模式追加操作意图到 `.gemini/ops_changelog.md`。
+4.  **VERIFY**: `read_file .gemini/ops_changelog.md` 确认追加成功且行数增加（禁止截断）。
+5.  **CLEANUP**: `rm .gemini/ops_changelog.md.bak`（验证成功后删除备份）。
 
 ### 1. Pre-operation Backup (Git Auto-Save)
 - **Check**: 执行 `git status --porcelain`。
@@ -56,3 +58,7 @@ description: Use when performing write operations (CREATE, UPDATE, DELETE, MOVE)
 - 绕过 Git 状态检查直接执行写操作。
 - 执行删除指令而未触发弹窗确认。
 - Changelog 记录缺失 `Reason` 或 `Undo_CMD`。
+- **ops_changelog 写保护触发**：
+  - 使用 overwrite 模式写入 ops_changelog（必须使用 append）
+  - 写入后文件行数异常减少（< 上次读取的 80%）
+  - 写入后文件为空或缺失表头

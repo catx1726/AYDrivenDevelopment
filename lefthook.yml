@@ -25,6 +25,10 @@ pre-commit:
       run: npx markdownlint-cli2 {staged_files} 2>/dev/null || echo "ℹ️ markdownlint-cli2 not installed, skipping"
       tags: [style]
 
+    check-docs-structure:
+      run: bash scripts/check-docs-structure.sh
+      tags: [harness, standards]
+
 commit-msg:
   commands:
     check-conventional-commit:
