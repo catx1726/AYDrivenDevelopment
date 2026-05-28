@@ -31,8 +31,8 @@ sequenceDiagram
     Note over AI, D: 10-13. 提纯与闭环 (Distill & Close)
     AI->>AI: activate_skill meta-distiller (资产提纯)<br/><i>(AI 暂存结果，等待 Driver 审查/Accept 提纯资产)</i>
     AI->>VCS: git commit & update ops_changelog.md (提交变更 & 更新审计日志)
-    AI->>VCS: gh pr create (创建 PR)<br/><i>🔒 自动触发 CI 检查：审计日志、Spec/Plan 同步、AI 审查</i>
-    CI->>CI: 执行自动化检查<br/><i>🔴 audit_check (强制) + 🟡 spec_plan_sync + ai_review (建议)</i>
+    AI->>VCS: gh pr create (创建 PR)<br/><i>🔒 自动触发 CI 检查：审计日志、Spec/Plan 同步、AI 审查、文档结构</i>
+    CI->>CI: 执行自动化检查<br/><i>🔴 audit_check (强制) + 🟡 spec_plan_sync + ai_review (建议) + 🟢 check-docs-structure (强制)</i>
     D->>VCS: gh pr merge (Driver 批准并合并 PR)<br/><i>🔒 触发 close_loop 知识闭环 (Issue 回帖 + CHANGELOG 自动更新)</i>
     CI->>VCS: git commit (自动更新 CHANGELOG.md)
     AI->>VCS: gh issue close (Issue 关闭)<br/><i>(仅在 PR 合并且 Driver 确认后执行)</i>

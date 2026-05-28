@@ -73,3 +73,31 @@ docs/superpowers/evaluator-handoffs/<task-id>-<timestamp>.md
 - 🟡 AI 说"由于上下文限制，我简要说明..." → **立即 Reset**
 - 🟡 AI 遗忘了 10 分钟前的决策 → **立即 Compaction**
 - 🟡 同一任务 Reset 超过 3 次 → **任务拆分过粗，需要重新 Plan**
+
+## 技能同步（跨平台）
+
+本项目技能存储在平台无关的 `skills/` 目录，通过脚本同步到各 AI CLI 平台。
+
+```bash
+# 默认同步到 .gemini/skills/
+bash scripts/sync-skills.sh
+
+# 同步到多个平台
+bash scripts/sync-skills.sh --target .gemini/skills --target .claude/skills
+```
+
+```powershell
+# PowerShell
+.\scripts\sync-skills.ps1 -Target .gemini/skills
+```
+
+## 合规检查快速参考
+
+执行代码/文档变更前，激活 `meta-compliance-checker` skill 并逐项勾选 checklist：
+
+- **安全标准**：输入校验 / 敏感信息 / 错误响应 / 权限检查 / 最小权限
+- **TDD 标准**：测试先行 / 回归测试 / 测试通过 / 覆盖合理
+- **日志标准**：级别正确 / 无敏感信息 / 结构化 / 上下文完整
+- **文档结构**：文件名规范 / front matter 完整 / 目录正确
+
+违规记录：`docs/superpowers/handoffs/` 中的任务 handoff 或 `.gemini/compliance_log.md`
