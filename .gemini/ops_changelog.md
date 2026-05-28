@@ -14,3 +14,7 @@
 | 2026-05-28T15:30+08:00 | add | docs/superpowers/context-management-strategy.md | Harness Engineering: 制定上下文管理策略（Compaction/Offloading/Reset） | 91167e8 | git rm docs/superpowers/context-management-strategy.md |
 
 | 2026-05-28T16:00+08:00 | update | AGENTS.md, lifecycle.md, tips.md | 更新引导文档：三层验证架构 + 上下文管理策略 | 20ce0e0 | git checkout HEAD~1 -- AGENTS.md docs/superpowers/lifecycle.md docs/superpowers/tips.md |
+
+| 2026-05-28T16:30+08:00 | add | skills/ + scripts/sync-skills.* | SKILL 目录通用化：创建平台无关 skills/ 目录和同步脚本 | 561ebd4 | git rm -r skills/ scripts/sync-skills.* |
+| 2026-05-28T16:30+08:00 | update | docs/superpowers/context-management-strategy.md | 新增中间决策留档机制（第 6 节），修正章节编号 | 561ebd4 | git checkout HEAD~1 -- docs/superpowers/context-management-strategy.md |
+| 2026-05-28T16:30+08:00 | update | .markdownlint-cli2.jsonc | 将 skills/ 加入 markdownlint 忽略列表 | 561ebd4 | git checkout HEAD~1 -- .markdownlint-cli2.jsonc |
