@@ -20,11 +20,13 @@ sequenceDiagram
     AI->>AI: activate_skill writing-plans (生成计划 & 编写 Plan)<br/><i>(AI 暂停，等待 Driver 批准 Plan 位于 docs/superpowers/plans/)</i>
     AI->>AI: activate_skill executing-plans (按 Task 逐步执行计划)<br/><i>(若执行失败，AI 重试/升级给 Driver)</i>
     AI->>AI: activate_skill meta-safe-executor (安全审计)<br/><i>(若检测到风险，AI 报告给 Driver，等待指令)</i>
+    Note over AI: 上下文管理检查<br/><i>(>30min 或 >25 文件 → 执行 Compaction/Offloading/Reset)</i>
 
     Note over AI, D: 7-9. 质量与验证 (Test & Verify)
     AI->>AI: activate_skill test-driven-development (TDD 循环)<br/><i>(遇歧义时，AI 进入"等待 Driver 问询/澄清"状态)</i>
-    AI->>AI: 语法检查 (node --check) + 冒烟测试<br/><i>(AI 向 Driver 呈现验证证据摘要)</i>
-    AI->>AI: activate_skill verification-before-completion (产出物证据)<br/><i>(AI 向 Driver 呈现证据摘要)</i>
+    AI->>AI: 语法检查 (node --check) + 冒烟测试<br/><i>(Layer 1: CI/Hook + Layer 2: Generator 自检)</i>
+    AI->>AI: activate_skill verification-before-completion (计算型验证)<br/><i>(运行测试命令，检查 exit code)</i>
+    AI->>AI: activate_skill meta-runtime-evaluator (推理型验证)<br/><i>(Layer 3: 独立 Evaluator 验证运行时行为，可选触发)</i>
 
     Note over AI, D: 10-13. 提纯与闭环 (Distill & Close)
     AI->>AI: activate_skill meta-distiller (资产提纯)<br/><i>(AI 暂存结果，等待 Driver 审查/Accept 提纯资产)</i>
@@ -45,6 +47,6 @@ sequenceDiagram
 |------|------|----------|--------|
 | 1-3 | 启动 (Launch) | `brainstorming` | Spec + Issue |
 | 4-6 | 计划与执行 (Plan & Act) | `writing-plans`, `executing-plans`, `meta-safe-executor` | Plan + 代码变更 |
-| 7-9 | 质量与验证 (Test & Verify) | `test-driven-development`, `verification-before-completion` | 测试通过 + 证据 |
+| 7-9 | 质量与验证 (Test & Verify) | `test-driven-development`, `verification-before-completion`, `meta-runtime-evaluator` | 测试通过 + 三层验证证据 |
 | 10-13 | 提纯与闭环 (Distill & Close) | `meta-distiller` | PR + 审计日志 |
 | 14 | 反馈与反思 | `perform_self_reflection` | ops_changelog 更新 |

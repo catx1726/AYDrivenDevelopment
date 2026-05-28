@@ -10,6 +10,8 @@ AI 引擎在执行任务时，必须参考以下标准文档以确保工程质�
 | **系统安全** | `docs/standards/security-standards.md` | 计划/执行 |
 | **日志记录** | `docs/standards/logging-standards.md` | 执行 (Act) |
 | **环境配置** | `docs/standards/environment-standards.md` | 启动/执行 |
+| **运行时验证** | `.gemini/skills/meta-runtime-evaluator/SKILL.md` | 验证 (Verify) |
+| **上下文管理** | `docs/superpowers/context-management-strategy.md` | 全周期 |
 | **代码审查** | `docs/standards/review-standards/review/reviewer/` | 闭环 (Close) |
 | **提交描述** | `docs/standards/review-standards/review/developer/` | 闭环 (Close) |
 
@@ -39,14 +41,20 @@ AI 引擎在执行任务时，必须参考以下标准文档以确保工程质�
 
 ### 3. 证据呈现规范 (Evidence Presentation)
 
-AI 在 `verification-before-completion` 阶段必须呈现以下证据：
+AI 在验证阶段必须按三层架构呈现证据：
 
 ```markdown
-### 验证证据
+### Layer 1 自动化证据（CI/Hook）
+- [ ] lint / format / type-check：0 errors
+- [ ] CI 强制检查：audit_check + spec_plan_sync
+
+### Layer 2 计算型证据（Generator 自检）
 - [ ] 单元测试通过率：X/Y
-- [ ] 手动测试截图/录屏：[附件]
-- [ ] 性能对比：优化前后数据
-- [ ] 兼容性测试：相关平台/环境
+- [ ] 构建命令：exit 0
+
+### Layer 3 推理型证据（独立 Evaluator）
+- [ ] 运行时行为验证：PASS/FAIL + 截图/日志
+- [ ] 需求满足度：Sprint Contract 逐项检查
 ```
 
 ---
@@ -58,3 +66,5 @@ AI 在 `verification-before-completion` 阶段必须呈现以下证据：
 - **Issue/PR 最佳实践**: `docs/superpowers/tips.md`
 - **Worktree 管理**: `activate_skill using-git-worktrees` (superpowers skill)
 - **Harness 调研上下文**: `docs/superpowers/handoffs/harness-engineering-research-2026-05-27.md`
+- **Generator/Evaluator 调研**: `docs/superpowers/handoffs/generator-evaluator-research-2026-05-28.md`
+- **三层验证架构**: `.gemini/skills/meta-runtime-evaluator/SKILL.md`

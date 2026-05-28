@@ -41,3 +41,35 @@ git worktree remove ../<repo>-issue-N
 - `git push --force`
 - 数据库迁移 / schema 变更
 - 核心逻辑重构
+
+## 上下文管理快速参考
+
+长任务中 AI 可能出现**上下文腐烂**（遗忘早期决策）或**上下文焦虑**
+（ prematurely wrapping up）。参考 `docs/superpowers/context-management-strategy.md`。
+
+### 触发信号（满足任一即执行）
+
+- 连续执行超过 **60 分钟**
+- 修改/读取文件超过 **25 个**
+- AI 开始重复之前的分析
+- AI 主动说"让我简要总结"
+
+### 三种策略
+
+| 策略 | 操作 | 适用场景 |
+|------|------|---------|
+| **Compaction** | 精简 todo、归档决策、删除已完成分支详情 | 同一会话内，上下文臃肿但未失效 |
+| **Offloading** | 将大段分析写入文件，会话只留引用 | 调研报告、Logic MRI 输出 |
+| **Reset** | 结束会话，新建会话，通过 handoff 文件接续 | 超过 2h 或 AI 多次出现焦虑症状 |
+
+### Reset Handoff 文件位置
+
+```text
+docs/superpowers/evaluator-handoffs/<task-id>-<timestamp>.md
+```
+
+### 危险信号
+
+- 🟡 AI 说"由于上下文限制，我简要说明..." → **立即 Reset**
+- 🟡 AI 遗忘了 10 分钟前的决策 → **立即 Compaction**
+- 🟡 同一任务 Reset 超过 3 次 → **任务拆分过粗，需要重新 Plan**
