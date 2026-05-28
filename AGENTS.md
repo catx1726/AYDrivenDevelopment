@@ -53,7 +53,7 @@ AI 在 `verification-before-completion` 阶段必须呈现以下证据：
 
 ## 快速参考
 
-- **新成员入门**: `GETTING_STARTED.md`
+- **新成员入门**: `README.md`
 - **生命周期详解**: `docs/superpowers/lifecycle.md`
 - **Issue/PR 最佳实践**: `docs/superpowers/tips.md`
 - **Worktree 管理**: `activate_skill using-git-worktrees` (superpowers skill)
