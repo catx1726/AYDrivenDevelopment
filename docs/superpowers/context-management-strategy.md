@@ -92,7 +92,67 @@ Compaction        Offloading         Reset
 2. 在会话中删除详细内容
 3. 替换为引用："详细分析见 [文件路径]"
 
-## 6. Reset 策略
+## 6. 中间决策留档（Interim Decision Archiving）
+
+**为什么不在 `meta-distiller`（任务尾部）留档？**
+
+`meta-distiller` 位于生命周期尾部（Distill & Close），此时会话已接近尾声，
+很多中间决策早已腐烂或丢失。日常讨论中的认知迭代必须在**产生时立即留档**。
+
+### 6.1 触发条件（满足任一即留档）
+
+- [ ] AI **修正了之前的理解**（"我之前说错了，正确的理解是..."）
+- [ ] 用户提出了**新的约束或变更**（范围变更、优先级调整）
+- [ ] 产生了**跨任务影响**的决策（影响其他模块、需要后续任务引用）
+- [ ] 识别出了 **recurring pattern**（可复用到其他项目的模式）
+- [ ] 用户对 AI 的输出提出了**根本性修正**
+
+### 6.2 留档方式
+
+#### 方式 A：追加到当前任务 handoff
+
+如果当前任务已有 handoff 文件（如调研报告），直接追加：
+
+```markdown
+### Amendment N: <一句话描述决策>
+
+**时间**: 2026-05-28
+**决策**: ...
+**理由**: ...
+**影响**: ...
+```
+
+#### 方式 B：写入决策归档目录
+
+如果当前没有 handoff 文件，写入专用目录：
+
+```text
+docs/superpowers/decisions/<yyyy-mm-dd>-<brief-title>.md
+```
+
+### 6.3 最小留档格式
+
+不需要完整报告，只需要：
+
+```markdown
+# Decision: <一句话>
+
+**时间**: 2026-05-28
+**触发**: 用户指出 / AI 自我修正 / 跨任务关联
+**决策**: <具体决策内容>
+**理由**: <为什么改变>
+**影响**: <影响哪些文件、哪些后续任务>
+```
+
+### 6.4 与 meta-distiller 的关系
+
+- **中间决策留档**：发生在执行阶段，**即时**、**轻量**
+- **meta-distiller**：发生在任务尾部，**全面**、**系统**
+- meta-distiller 应该**引用**中间决策留档，而不是重复记录
+
+---
+
+## 7. Reset 策略
 
 **最彻底的策略**：结束当前会话，新建会话，通过 handoff 文件传递状态。
 
@@ -159,7 +219,7 @@ status: in_progress
 3. 不重复 handoff 中已记录的分析
 4. 直接继续待办工作
 
-## 7. 与生命周期的整合
+## 8. 与生命周期的整合
 
 将上下文管理嵌入 `lifecycle.md` 的各阶段：
 
@@ -173,7 +233,7 @@ status: in_progress
 | **Distill** | meta-distiller 产出写入 Staging | Offloading |
 | **Close** | 最终 handoff 归档 | Reset |
 
-## 8. 具体执行 Checklist
+## 9. 具体执行 Checklist
 
 当触发条件满足时，按以下顺序执行：
 
@@ -186,7 +246,7 @@ status: in_progress
 - [ ] Step 6: 更新 ops_changelog 记录上下文管理事件
 ```
 
-## 9. Red Flags
+## 10. Red Flags
 
 **禁止：**
 
