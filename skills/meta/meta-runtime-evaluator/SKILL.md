@@ -188,16 +188,4 @@ Evaluator 收到 handoff 后，按以下流程执行：
 
 ---
 
-## Platform Adaptation Note
 
-本 skill 为纯 Markdown 文档，平台无关。
-
-各 AI CLI 的适配方式：
-
-- **Claude Code**: 使用 `Task` tool dispatch `general-purpose` subagent
-- **Kimi Code**: 使用 `Agent` tool dispatch subagent
-- **Gemini CLI**: 使用 agent 模式
-- **Cursor**: 使用 `.cursor/agents/` 定义
-
-具体工具调用由当前平台的 Agent 自行实现，skill 文档只规定"需要做什么"和
-"输出什么"。

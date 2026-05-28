@@ -52,7 +52,7 @@ description: Use when performing write operations (CREATE, UPDATE, DELETE, MOVE)
   > **确认执行？[Y/N]**
 
 ## Cleanup
-- 归档时由 `openspec-changes-archive` 负责将日志迁移至 `openspec/operations/` 审计库。
+- 审计日志按项目约定归档至 `.gemini/ops_changelog.md`。
 
 ## Red Flags
 - 绕过 Git 状态检查直接执行写操作。

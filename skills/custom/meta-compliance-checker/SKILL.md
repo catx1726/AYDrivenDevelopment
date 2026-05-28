@@ -128,13 +128,4 @@ meta-safe-executor workflow:
 
 ---
 
-## Platform Adaptation Note
 
-本 skill 为纯 Markdown 文档，平台无关。
-
-各平台执行方式：
-- **Claude Code**: 通过 `Task` tool 或对话中激活
-- **Kimi Code**: 通过 `AGENTS.md` 引用或对话中激活
-- **Gemini CLI**: 通过 `.gemini/skills/` 自动加载
-
-具体工具调用由当前平台 Agent 自行实现，skill 只规定"必须勾选哪些项"。
