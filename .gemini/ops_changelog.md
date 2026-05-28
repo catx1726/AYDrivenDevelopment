@@ -18,3 +18,8 @@
 | 2026-05-28T16:30+08:00 | add | skills/ + scripts/sync-skills.* | SKILL 目录通用化：创建平台无关 skills/ 目录和同步脚本 | 561ebd4 | git rm -r skills/ scripts/sync-skills.* |
 | 2026-05-28T16:30+08:00 | update | docs/superpowers/context-management-strategy.md | 新增中间决策留档机制（第 6 节），修正章节编号 | 561ebd4 | git checkout HEAD~1 -- docs/superpowers/context-management-strategy.md |
 | 2026-05-28T16:30+08:00 | update | .markdownlint-cli2.jsonc | 将 skills/ 加入 markdownlint 忽略列表 | 561ebd4 | git checkout HEAD~1 -- .markdownlint-cli2.jsonc |
+
+| 2026-05-28T17:00+08:00 | add | scripts/check-docs-structure.* + lefthook | 机械化架构约束：文档结构检查脚本和 hook | 61dfb3f | git rm scripts/check-docs-structure.* |
+| 2026-05-28T17:00+08:00 | add | skills/custom/meta-compliance-checker/ | 合规检查 skill（安全/TDD/日志/文档 checklist + Ratchet） | 61dfb3f | git rm -r skills/custom/meta-compliance-checker/ |
+| 2026-05-28T17:00+08:00 | add | .gemini/compliance_log.md | 合规审计日志（Ratchet 记录表） | 61dfb3f | git rm .gemini/compliance_log.md |
+| 2026-05-28T17:00+08:00 | update | skills/meta/meta-safe-executor/SKILL.md | ops_changelog 写保护协议（backup + append-only + 行数校验） | 61dfb3f | git checkout HEAD~1 -- skills/meta/meta-safe-executor/SKILL.md |
