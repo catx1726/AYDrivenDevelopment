@@ -21,6 +21,7 @@ gh issue create --title "标题" --body "## 内容..."
 本项目使用 **superpowers `using-git-worktrees` skill** 管理 worktree。Agent 会自动按规范执行。
 
 如需手动操作，项目命名规范为：
+
 ```bash
 # 创建隔离工作区
 git worktree add ../<repo>-issue-N -b issue-N-feature-name
@@ -35,6 +36,7 @@ git worktree remove ../<repo>-issue-N
 ## 破坏性操作 checklist
 
 执行以下操作前必须记录审计日志并确认：
+
 - `rm -rf` 删除目录
 - `git push --force`
 - 数据库迁移 / schema 变更

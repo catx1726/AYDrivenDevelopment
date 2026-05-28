@@ -1,0 +1,15 @@
+{
+  "globs": [
+    "AGENTS.md",
+    "GETTING_STARTED.md",
+    "CHANGELOG.md",
+    "docs/superpowers/**/*.md"
+  ],
+  "ignores": [
+    "node_modules/**",
+    ".git/**",
+    ".gemini/skills/**",
+    "docs/standards/**",
+    ".github/**"
+  ]
+}
