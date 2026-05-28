@@ -23,17 +23,6 @@ AI 引擎在执行任务时，必须参考以下标准文档以确保工程质�
 
 完整生命周期见 `docs/superpowers/lifecycle.md`。
 
-### 0. 工作流选择 (Workflow Selection)
-
-AI 在接收任何任务后，**必须首先判断**适用工作流：
-
-```markdown
-- [ ] 范围 ≤ 10 个文件且目标明确 → **Surgical Workflow**
-- [ ] 全新功能 / 架构变更 / >10 文件 → **标准生命周期**
-```
-
-**不满足 Surgical Workflow 任一条件 → 必须使用标准生命周期。**
-
 ### 1. AI 暂停点 (AI Pause Points)
 
 | 阶段 | 暂停点 | 等待内容 |

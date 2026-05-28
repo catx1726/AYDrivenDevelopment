@@ -7,7 +7,7 @@
 标准生命周期（`docs/superpowers/lifecycle.md`）适用于全新功能开发和重大架构变更，
 要求完整的 Spec → Issue → Plan → TDD → 三层验证 → Distill 闭环。
 
-当变更范围小、目标明确、无需新建模块时，使用本工作流以减少文档负担和流程摩擦。
+当变更范围小（≤10 文件）、目标明确、无架构变更、且为现有模块内部调整时，使用本工作流以减少文档负担和流程摩擦。
 
 ---
 
@@ -27,7 +27,7 @@ AI 在接收任务后，**立即执行**以下判断：
 | 勾选数 | 结论 |
 |--------|------|
 | 4/4 ✅ | **使用 Surgical Workflow** — 跳过 Spec/Plan，直接进入逻辑 MRI |
-| < 4 ❌ | **使用标准生命周期** — 执行 brainstorming → Spec → Issue → Plan |
+| < 4 | **回退标准生命周期** — 执行 brainstorming → Spec → Issue → Plan |
 
 **重要**：不满足条件时强行使用 Surgical Workflow 会导致方向偏差和返工。
 
@@ -223,7 +223,7 @@ Surgical Workflow 不要求完整的 `meta-compliance-checker` checklist，
 | 场景 | 使用工作流 |
 |------|-----------|
 | 全新功能 / 架构变更 / >10 文件 | 标准生命周期 |
-| Bug 修复 / 逻辑微调 / 非结构性重构 / ≤10 文件 | Surgical Workflow |
+| Bug 修复 / 逻辑微调 / 无架构变更重构 / ≤10 文件 | Surgical Workflow |
 | 执行过程中发现范围膨胀（>10 文件或架构变更） | **立即切换回标准生命周期**，补 Spec/Plan |
 
 ---

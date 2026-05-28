@@ -13,7 +13,7 @@ sequenceDiagram
     Note over D, AI: 1-3. 启动阶段 (Launch)
     AI->>AI: 工作流选择检查<br/><i>(范围 ≤10 文件 + 目标明确 + 无架构变更？→ Surgical Workflow)</i>
     alt 使用 Surgical Workflow
-        AI->>AI: activate_skill surgical-workflow<br/><i>(逻辑 MRI → 安全垫 → 极简计划 → 增量开发 → 闭环)</i>
+        AI->>AI: 按 surgical-workflow-concept.md 执行<br/><i>(逻辑 MRI → 安全垫 → 极简计划 → 增量开发 → 闭环)</i>
     else 使用标准生命周期
         AI->>AI: activate_skill brainstorming (需求探索 & 编写 Spec)<br/><i>(AI 暂停，等待 Driver 确认设计规范 Spec 位于 docs/superpowers/specs/)</i>
         D->>AI: 确认 Spec
