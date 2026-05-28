@@ -21,7 +21,7 @@ This is not optional. Check for matching skills **before** responding or taking 
 | meta-distiller | `skills/meta/meta-distiller/SKILL.md` | When distilling logic to reusable assets |
 | meta-rollback | `skills/meta/meta-rollback/SKILL.md` | When needing to undo recent operations |
 | meta-step-runner | `skills/meta/meta-step-runner/SKILL.md` | When executing a skill marked `mode: step-by-step` |
-| meta-path-discovery | `skills/meta/meta-path-discovery/SKILL.md` | When locating shared assets or project roots |
+| meta-path-discovery | `skills/meta/meta-path-discovery/SKILL.md` | When locating the project root directory or verifying working directory |
 
 ## How to Access Skills
 
