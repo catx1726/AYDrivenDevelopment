@@ -10,8 +10,8 @@ AI 引擎在执行任务时，必须参考以下标准文档以确保工程质�
 | **系统安全** | `docs/standards/security-standards.md` | 计划/执行 |
 | **日志记录** | `docs/standards/logging-standards.md` | 执行 (Act) |
 | **环境配置** | `docs/standards/environment-standards.md` | 启动/执行 |
-| **运行时验证** | `.gemini/skills/meta-runtime-evaluator/SKILL.md` | 验证 (Verify) |
-| **合规检查** | `.gemini/skills/meta-compliance-checker/SKILL.md` | 执行/验证 |
+| **运行时验证** | `skills/meta/meta-runtime-evaluator/SKILL.md` | 验证 (Verify) |
+| **合规检查** | `skills/custom/meta-compliance-checker/SKILL.md` | 执行/验证 |
 | **手术切入式工作流** | `docs/standards/surgical-workflow-concept.md` | 执行 (Act) |
 | **上下文管理** | `docs/superpowers/context-management-strategy.md` | 全周期 |
 | **代码审查** | `docs/standards/review-standards/review/reviewer/` | 闭环 (Close) |
@@ -68,7 +68,8 @@ AI 在验证阶段必须按三层架构呈现证据：
 - **Issue/PR 最佳实践**: `docs/superpowers/tips.md`
 - **Worktree 管理**: `activate_skill using-git-worktrees` (superpowers skill)
 - **当前任务上下文**: 如存在任务 handoff，Launch 阶段优先读取
-- **三层验证架构**: `.gemini/skills/meta-runtime-evaluator/SKILL.md`
-- **合规检查**: `.gemini/skills/meta-compliance-checker/SKILL.md`
+- **技能系统入口**: 任务启动时检查 `skills/` 下是否有匹配 skill (`skills/meta/project-entry/SKILL.md`)
+- **三层验证架构**: `skills/meta/meta-runtime-evaluator/SKILL.md`
+- **合规检查**: `skills/custom/meta-compliance-checker/SKILL.md`
 - **技能同步脚本**: `scripts/sync-skills.sh` / `.ps1`
 - **手术切入式工作流**: `docs/standards/surgical-workflow-concept.md`
