@@ -12,3 +12,5 @@
 | 2026-05-28T14:00+08:00 | update | docs/superpowers/handoffs/harness-engineering-research-2026-05-27.md | Harness Engineering: 修正 Superpowers 角色描述 | 6eab2ee | git checkout HEAD~1 -- docs/superpowers/handoffs/harness-engineering-research-2026-05-27.md |
 
 | 2026-05-28T15:30+08:00 | add | docs/superpowers/context-management-strategy.md | Harness Engineering: 制定上下文管理策略（Compaction/Offloading/Reset） | 91167e8 | git rm docs/superpowers/context-management-strategy.md |
+
+| 2026-05-28T16:00+08:00 | update | AGENTS.md, lifecycle.md, tips.md | 更新引导文档：三层验证架构 + 上下文管理策略 | 20ce0e0 | git checkout HEAD~1 -- AGENTS.md docs/superpowers/lifecycle.md docs/superpowers/tips.md |
