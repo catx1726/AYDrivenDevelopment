@@ -12,6 +12,7 @@ AI 引擎在执行任务时，必须参考以下标准文档以确保工程质�
 | **环境配置** | `docs/standards/environment-standards.md` | 启动/执行 |
 | **运行时验证** | `.gemini/skills/meta-runtime-evaluator/SKILL.md` | 验证 (Verify) |
 | **合规检查** | `.gemini/skills/meta-compliance-checker/SKILL.md` | 执行/验证 |
+| **手术切入式工作流** | `docs/standards/surgical-workflow-concept.md` | 执行 (Act) |
 | **上下文管理** | `docs/superpowers/context-management-strategy.md` | 全周期 |
 | **代码审查** | `docs/standards/review-standards/review/reviewer/` | 闭环 (Close) |
 | **提交描述** | `docs/standards/review-standards/review/developer/` | 闭环 (Close) |
@@ -21,6 +22,17 @@ AI 引擎在执行任务时，必须参考以下标准文档以确保工程质�
 ## 人机交互规范 (Human-in-the-Loop Standards)
 
 完整生命周期见 `docs/superpowers/lifecycle.md`。
+
+### 0. 工作流选择 (Workflow Selection)
+
+AI 在接收任何任务后，**必须首先判断**适用工作流：
+
+```markdown
+- [ ] 范围 ≤ 10 个文件且目标明确 → **Surgical Workflow**
+- [ ] 全新功能 / 架构变更 / >10 文件 → **标准生命周期**
+```
+
+**不满足 Surgical Workflow 任一条件 → 必须使用标准生命周期。**
 
 ### 1. AI 暂停点 (AI Pause Points)
 
@@ -71,3 +83,4 @@ AI 在验证阶段必须按三层架构呈现证据：
 - **三层验证架构**: `.gemini/skills/meta-runtime-evaluator/SKILL.md`
 - **合规检查**: `.gemini/skills/meta-compliance-checker/SKILL.md`
 - **技能同步脚本**: `scripts/sync-skills.sh` / `.ps1`
+- **手术切入式工作流**: `docs/standards/surgical-workflow-concept.md`

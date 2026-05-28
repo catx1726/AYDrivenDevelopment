@@ -11,7 +11,29 @@
 
 ---
 
-## 2. 适用条件（必须同时满足）
+## 2. 快速判断（触发器）
+
+AI 在接收任务后，**立即执行**以下判断：
+
+```markdown
+- [ ] 修改文件数 ≤ 10 个？
+- [ ] 用户能描述"修改 X 使其在 Y 场景下输出 Z"？
+- [ ] 不涉及接口/数据模型/依赖关系变更？
+- [ ] 修改对象是已存在的功能（非全新模块）？
+```
+
+**结果：**
+
+| 勾选数 | 结论 |
+|--------|------|
+| 4/4 ✅ | **使用 Surgical Workflow** — 跳过 Spec/Plan，直接进入逻辑 MRI |
+| < 4 ❌ | **使用标准生命周期** — 执行 brainstorming → Spec → Issue → Plan |
+
+**重要**：不满足条件时强行使用 Surgical Workflow 会导致方向偏差和返工。
+
+---
+
+## 3. 适用条件（详细说明）
 
 | 条件 | 说明 |
 |------|------|
@@ -24,7 +46,7 @@
 
 ---
 
-## 3. 工作流阶段
+## 4. 工作流阶段
 
 ```text
 逻辑 MRI ──→ 安全垫 ──→ 极简计划 ──→ 增量开发 ──→ 验证与闭环
@@ -179,7 +201,7 @@ Surgical Workflow 不要求完整的 `meta-compliance-checker` checklist，
 
 ---
 
-## 4. 与标准生命周期的衔接
+## 5. 与标准生命周期的衔接
 
 ```text
 标准生命周期 (lifecycle.md)
@@ -206,7 +228,7 @@ Surgical Workflow 不要求完整的 `meta-compliance-checker` checklist，
 
 ---
 
-## 5. 上下文管理
+## 6. 上下文管理
 
 Surgical Workflow 虽然短，但仍需上下文管理：
 
@@ -219,7 +241,7 @@ Surgical Workflow 虽然短，但仍需上下文管理：
 
 ---
 
-## 6. Red Flags
+## 7. Red Flags
 
 - ❌ 用 Surgical Workflow 做全新功能开发（缺少 Spec 导致方向偏差）
 - ❌ 跳过特征测试直接修改代码（无安全垫，易引入退化）
