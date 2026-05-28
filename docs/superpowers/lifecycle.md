@@ -11,12 +11,16 @@ sequenceDiagram
     participant CI as GitHub Actions (CI/CD)
 
     Note over D, AI: 1-3. 启动阶段 (Launch)
-    AI->>AI: activate_skill brainstorming (需求探索 & 编写 Spec)<br/><i>(AI 暂停，等待 Driver 确认设计规范 Spec 位于 docs/superpowers/specs/)</i>
-    D->>AI: 确认 Spec
-    AI->>VCS: gh issue create (使用 Issue Template 创建 Issue)<br/><i>(关联 Spec/Plan 文档路径)</i>
-    AI->>VCS: git checkout -b issue-N (分支隔离)<br/><i>(若失败，AI 报告给 Driver，等待指示)</i>
+    AI->>AI: 工作流选择检查<br/><i>(范围 ≤10 文件 + 目标明确 + 无架构变更？→ Surgical Workflow)</i>
+    alt 使用 Surgical Workflow
+        AI->>AI: activate_skill surgical-workflow<br/><i>(逻辑 MRI → 安全垫 → 极简计划 → 增量开发 → 闭环)</i>
+    else 使用标准生命周期
+        AI->>AI: activate_skill brainstorming (需求探索 & 编写 Spec)<br/><i>(AI 暂停，等待 Driver 确认设计规范 Spec 位于 docs/superpowers/specs/)</i>
+        D->>AI: 确认 Spec
+        AI->>VCS: gh issue create (使用 Issue Template 创建 Issue)<br/><i>(关联 Spec/Plan 文档路径)</i>
+        AI->>VCS: git checkout -b issue-N (分支隔离)<br/><i>(若失败，AI 报告给 Driver，等待指示)</i>
 
-    Note over AI, VCS: 4-6. 计划与执行 (Plan & Act)
+        Note over AI, VCS: 4-6. 计划与执行 (Plan & Act)
     AI->>AI: activate_skill writing-plans (生成计划 & 编写 Plan)<br/><i>(AI 暂停，等待 Driver 批准 Plan 位于 docs/superpowers/plans/)</i>
     AI->>AI: activate_skill executing-plans (按 Task 逐步执行计划)<br/><i>(若执行失败，AI 重试/升级给 Driver)</i>
     AI->>AI: activate_skill meta-safe-executor (安全审计)<br/><i>(若检测到风险，AI 报告给 Driver，等待指令)</i>
