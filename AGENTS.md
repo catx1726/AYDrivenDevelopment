@@ -63,12 +63,12 @@ AI 在验证阶段必须按三层架构呈现证据：
 
 ## 快速参考
 
+- **技能系统入口**: 任务启动时检查 `skills/` 下是否有匹配 skill (`skills/meta/project-entry/SKILL.md`)
 - **新成员入门**: `README.md`
 - **生命周期详解**: `docs/superpowers/lifecycle.md`
 - **Issue/PR 最佳实践**: `docs/superpowers/tips.md`
 - **Worktree 管理**: `activate_skill using-git-worktrees` (superpowers skill)
 - **当前任务上下文**: 如存在任务 handoff，Launch 阶段优先读取
-- **技能系统入口**: 任务启动时检查 `skills/` 下是否有匹配 skill (`skills/meta/project-entry/SKILL.md`)
 - **三层验证架构**: `skills/meta/meta-runtime-evaluator/SKILL.md`
 - **合规检查**: `skills/custom/meta-compliance-checker/SKILL.md`
 - **技能同步脚本**: `scripts/sync-skills.sh` / `.ps1`

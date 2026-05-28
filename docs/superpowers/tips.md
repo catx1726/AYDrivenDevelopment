@@ -93,7 +93,7 @@ bash scripts/sync-skills.sh --target .gemini/skills --target .claude/skills
 
 ## 合规检查快速参考
 
-执行代码/文档变更前，激活 `meta-compliance-checker` skill 并逐项勾选 checklist：
+任务完成前，激活 `meta-compliance-checker` skill 并逐项勾选 checklist：
 
 - **安全标准**：输入校验 / 敏感信息 / 错误响应 / 权限检查 / 最小权限
 - **TDD 标准**：测试先行 / 回归测试 / 测试通过 / 覆盖合理
