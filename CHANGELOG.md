@@ -1,6 +1,6 @@
 # Unreleased
 
-### [2026-05-27] feat(harness): AGENTS.md精简+Local Hooks+上下文归档 (#9)
+## [2026-05-27] feat(harness): AGENTS.md精简+Local Hooks+上下文归档 (#9)
 
 - AGENTS.md 精简（117行→59行），移出 Mermaid 图和命令细节至 docs/superpowers/
 - 增加 Local Hooks 层（lefthook.yml）：AGENTS.md 大小检查、禁止破坏性命令、Conventional Commits

@@ -80,7 +80,11 @@ next_actions:
 - obra (Jesse Vincent) 的 MIT 开源项目，116k+ stars
 - **纯 Markdown 技能框架**，零依赖，多平台（Claude Code/Cursor/Codex/Gemini CLI/OpenCode）
 - v2.0 后技能仓库分离为 `obra/superpowers-skills`，支持 fork + 分支 workflow
-- 核心技能：brainstorming, writing-plans, executing-plans, TDD, systematic-debugging, verification-before-completion, subagent-driven-development, using-git-worktrees, finishing-a-development-branch, requesting-code-review, receiving-code-review, writing-skills, using-superpowers
+- 核心技能：brainstorming, writing-plans, executing-plans, TDD,
+  systematic-debugging, verification-before-completion,
+  subagent-driven-development, using-git-worktrees,
+  finishing-a-development-branch, requesting-code-review,
+  receiving-code-review, writing-skills, using-superpowers
 
 ### 4.2 与 Harness Engineering 的关系
 
@@ -93,7 +97,8 @@ next_actions:
 **不建议抛弃 superpowers，也不建议完全依赖 upstream。**
 
 推荐架构：
-```
+
+```text
 ┌─────────────────────────────────────────┐
 │  自定义 Harness 层（自己维护）            │
 │  - meta-distiller / meta-safe-executor  │
@@ -113,6 +118,7 @@ next_actions:
 ```
 
 **执行方式**：
+
 1. Fork `obra/superpowers-skills`（不是 superpowers 插件）
 2. 将 `.gemini/skills/` 中的自定义技能按 superpowers `writing-skills` 标准格式化，放入 fork 的 `skills/custom/`
 3. 使用 `pulling-updates-from-skills-repository` 技能定期同步 upstream
@@ -121,21 +127,25 @@ next_actions:
 ## 5. 建议的下一步行动（已按 ROI 排序）
 
 ### Action 1: AGENTS.md 精简（2h）
+
 - 保留：生命周期地图、标准索引、暂停点、升级条件
 - 移出：Mermaid 图 → `docs/superpowers/lifecycle.md`；Windows gh 提示 → `docs/superpowers/tips.md`
 - 目标：< 80 行，每条规则标注 Ratchet 来源
 
 ### Action 2: Local Hooks 层（1d）
+
 - 增加 `lefthook.yml` 或 `.pre-commit-config.yaml`
 - 包含：lint-staged、forbid-destructive、check-agents-md-size
 - 原则：Success is silent; failures are verbose
 
 ### Action 3: Worktree 自动化脚本（0.5d）
+
 - 创建 `scripts/worktree-manager.sh` / `.ps1`
 - 封装：create / list / cleanup
 - AGENTS.md 增加指向该脚本的地图条目
 
 ### Action 4: Generator/Evaluator 分离（1-2d）
+
 - 从 code-review 入手，创建独立 subagent（Evaluator）
 - 与 Generator 架构隔离（不同会话/上下文）
 - 参考 superpowers `requesting-code-review` 但改为强制 subagent 执行
