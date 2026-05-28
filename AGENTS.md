@@ -78,8 +78,7 @@ AI 在验证阶段必须按三层架构呈现证据：
 - **生命周期详解**: `docs/superpowers/lifecycle.md`
 - **Issue/PR 最佳实践**: `docs/superpowers/tips.md`
 - **Worktree 管理**: `activate_skill using-git-worktrees` (superpowers skill)
-- **Harness 调研上下文**: `docs/superpowers/handoffs/harness-engineering-research-2026-05-27.md`
-- **Generator/Evaluator 调研**: `docs/superpowers/handoffs/generator-evaluator-research-2026-05-28.md`
+- **当前任务上下文**: 如存在任务 handoff，Launch 阶段优先读取
 - **三层验证架构**: `.gemini/skills/meta-runtime-evaluator/SKILL.md`
 - **合规检查**: `.gemini/skills/meta-compliance-checker/SKILL.md`
 - **技能同步脚本**: `scripts/sync-skills.sh` / `.ps1`
