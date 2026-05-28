@@ -15,7 +15,7 @@ AI 引擎在执行任务时，必须参考以下标准文档以确保工程质�
 
 ---
 
-# 人机交互规范 (Human-in-the-Loop Standards)
+## 人机交互规范 (Human-in-the-Loop Standards)
 
 完整生命周期见 `docs/superpowers/lifecycle.md`。
 
@@ -51,8 +51,9 @@ AI 在 `verification-before-completion` 阶段必须呈现以下证据：
 
 ---
 
-# 快速参考
+## 快速参考
 
+- **新成员入门**: `GETTING_STARTED.md`
 - **生命周期详解**: `docs/superpowers/lifecycle.md`
 - **Issue/PR 最佳实践**: `docs/superpowers/tips.md`
 - **Worktree 管理**: `activate_skill using-git-worktrees` (superpowers skill)

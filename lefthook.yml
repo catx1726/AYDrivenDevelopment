@@ -1,6 +1,13 @@
 # Local Hooks — 执行层 Enforcement
 # 原则: Success is silent; failures are verbose
-# 安装: npx lefthook install (或 brew install evilmartians/lefthook/lefthook)
+#
+# ⚠️ 重要：本文件只是配置，不会自动生效！
+# 首次使用本项目时，必须运行：
+#   ./scripts/setup-dev.sh        (macOS / Linux / WSL)
+#   .\scripts\setup-dev.ps1       (Windows PowerShell)
+#
+# 该命令会自动安装 lefthook 并把 hooks 注册到 .git/hooks/ 目录。
+# 详见 GETTING_STARTED.md
 
 pre-commit:
   parallel: true
@@ -21,11 +28,5 @@ pre-commit:
 commit-msg:
   commands:
     check-conventional-commit:
-      run: |
-        MSG=$(cat {1})
-        if ! echo "$MSG" | grep -qE '^(feat|fix|docs|style|refactor|test|chore|ci|revert)(\(.+\))?: .+'; then
-          echo "❌ Commit message must follow Conventional Commits"
-          echo "   Example: feat(auth): add login endpoint"
-          exit 1
-        fi
+      run: bash scripts/check-conventional-commit.sh {1}
       tags: [style]
