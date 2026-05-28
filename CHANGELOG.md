@@ -1,5 +1,9 @@
 # Unreleased
 
+### [2026-05-28] refactor(docs): 修复 SSOT，README.md 替代 GETTING_STARTED.md (#12)
+refactor(docs): 修复 SSOT，README.md 替代 GETTING_STARTED.md
+
+
 ### [2026-05-28] fix(harness): 修复 Local Hooks onboarding 断层 (#11)
 fix(harness): 修复 Local Hooks onboarding 断层
 
