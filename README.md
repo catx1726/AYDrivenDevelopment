@@ -29,6 +29,7 @@ cd <repo-name>
 | `docs/superpowers/tips.md` | 人类 | Issue/PR/Worktree 命令操作提示 |
 | `docs/standards/` | 人类 + AI | 工程标准（代码规范、TDD、API 设计、安全等） |
 | `docs/superpowers/handoffs/` | AI | 跨会话上下文交接文档 |
+| `skills/` | AI | 技能系统（project-entry、meta-safe-executor 等） |
 | `scripts/` | 人类 + AI | 开发工具脚本（setup-dev、check-agents-md 等） |
 
 ## 核心机制
@@ -61,11 +62,16 @@ AI 遵循 Superpowers 技能系统：`brainstorming` → `writing-plans` → `ex
 │       ├── lifecycle.md        # SSOT：唯一完整生命周期
 │       ├── tips.md             # SSOT：人类操作提示
 │       └── handoffs/           # AI 跨会话上下文交接
+├── skills/                     # 技能系统主目录（平台无关）
+│   ├── meta/                   # 核心元技能
+│   └── custom/                 # 自定义技能
 ├── scripts/
 │   ├── setup-dev.sh            # 开发环境一键安装
 │   ├── check-agents-md.sh      # AGENTS.md 大小检查
+│   ├── check-docs-structure.sh # 文档结构检查
 │   ├── forbid-destructive.sh   # 破坏性命令检测
-│   └── check-conventional-commit.sh  # Commit message 检查
+│   ├── check-conventional-commit.sh  # Commit message 检查
+│   └── sync-skills.sh          # 技能同步（跨平台）
 └── .gemini/
     └── ops_changelog.md        # 操作审计日志
 ```

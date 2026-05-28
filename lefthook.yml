@@ -7,7 +7,7 @@
 #   .\scripts\setup-dev.ps1       (Windows PowerShell)
 #
 # 该命令会自动安装 lefthook 并把 hooks 注册到 .git/hooks/ 目录。
-# 详见 GETTING_STARTED.md
+# 详见 README.md
 
 pre-commit:
   parallel: true
