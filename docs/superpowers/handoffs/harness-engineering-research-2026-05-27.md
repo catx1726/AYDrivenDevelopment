@@ -88,8 +88,8 @@ next_actions:
 
 ### 4.2 与 Harness Engineering 的关系
 
-- **Superpowers = 纪律层（怎么做）**
-- **Harness Engineering = 环境层（在哪做、怎么约束、谁来做）**
+- **Superpowers = 完整工作流技能栈（怎么做）** — 覆盖从 brainstorming 到 finishing-branch 的全生命周期
+- **Harness Engineering = 环境层（在哪做、怎么约束、谁来做）** — 关注架构分离、上下文管理、运行时隔离
 - 两者互补，不是替代
 
 ### 4.3 决策：Fork + 扩展（混合策略）
