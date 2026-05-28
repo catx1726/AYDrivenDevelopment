@@ -10,3 +10,5 @@
 | 2026-05-28T14:00+08:00 | add | .gemini/skills/meta-runtime-evaluator/ | Harness Engineering: 创建 Layer 3 独立运行时验证 skill | 6eab2ee | git rm -r .gemini/skills/meta-runtime-evaluator/ |
 | 2026-05-28T14:00+08:00 | add | docs/superpowers/handoffs/generator-evaluator-research-2026-05-28.md | Harness Engineering: Generator/Evaluator 分离调研报告 | 6eab2ee | git rm docs/superpowers/handoffs/generator-evaluator-research-2026-05-28.md |
 | 2026-05-28T14:00+08:00 | update | docs/superpowers/handoffs/harness-engineering-research-2026-05-27.md | Harness Engineering: 修正 Superpowers 角色描述 | 6eab2ee | git checkout HEAD~1 -- docs/superpowers/handoffs/harness-engineering-research-2026-05-27.md |
+
+| 2026-05-28T15:30+08:00 | add | docs/superpowers/context-management-strategy.md | Harness Engineering: 制定上下文管理策略（Compaction/Offloading/Reset） | 91167e8 | git rm docs/superpowers/context-management-strategy.md |
