@@ -41,3 +41,6 @@
 
 | 2026-05-29T14:05+08:00 | fix | docs/superpowers/tips.md | 修复 surgical-workflow-concept.md 的引用路径（standards → superpowers） | current | git checkout HEAD~1 -- docs/superpowers/tips.md
 | 2026-05-29T14:05+08:00 | refactor | README.md | 优化文档地图：standards 和 skills 行指向 AGENTS.md/project-entry，消除与 AGENTS.md 标准索引的重复 | current | git checkout HEAD~1 -- README.md
+
+| 2026-05-29T14:10+08:00 | update | README.md | 用户重新排版：核心机制前置，文档地图后移，QA 改回多行格式 | current | git checkout HEAD~1 -- README.md
+| 2026-05-29T14:10+08:00 | fix | docs/standards/test-driven-development.md + logging-standards.md + api-design-standards.md | 将 dangling reference（链接到不存在的文件）改为纯文本，保留上下文信息 | current | git checkout HEAD~1 -- docs/standards/test-driven-development.md docs/standards/logging-standards.md docs/standards/api-design-standards.md

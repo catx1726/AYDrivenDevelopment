@@ -15,8 +15,23 @@ cd <repo-name>
 .\scripts\setup-dev.ps1      # Windows PowerShell
 ```
 
-> `setup-dev` 会自动安装 lefthook 并把 hooks 注册到 `.git/hooks/`。
-> 不安装则提交不会经过 AGENTS.md 大小检查、破坏性命令拦截等安全机制。
+> `setup-dev` 会自动安装 lefthook 并把 hooks 注册到 `.git/hooks/`。不安装则提交不会经过 AGENTS.md 大小检查、破坏性命令拦截等安全机制。
+
+## 核心机制
+
+### 人类（Driver）的职责
+
+1. **启动任务**：提出需求，确认 AI 产出的 Spec 和 Plan
+2. **关键决策**：在 AI 暂停点（Pause Points）给出确认或指令
+3. **审查合并**：验证 AI 的产出物证据，批准 PR
+
+详细的人机交互规范见 `AGENTS.md` → `人机交互规范` 章节。
+
+### AI Agent 的执行纪律
+
+AI 遵循 Superpowers 技能系统：`brainstorming` → `writing-plans` → `executing-plans` → `verification-before-completion`。
+
+详细生命周期见 `docs/superpowers/lifecycle.md`。
 
 ## 项目结构
 
@@ -50,12 +65,26 @@ cd <repo-name>
     └── distill_stage/          # 资产提纯暂存区
 ```
 
-> **平台后缀约定**：`.sh` = Bash（macOS / Linux / WSL），`.ps1` = PowerShell（Windows）。每个脚本功能相同，按你的环境选一种运行。
+## 文档地图（SSOT）
+
+**本文档不重复具体流程，所有详细内容在以下文档中：**
+
+| 文档                            | 面向读者  | 内容                                                          |
+| ------------------------------- | --------- | ------------------------------------------------------------- |
+| `AGENTS.md`                     | AI Agent  | 系统 prompt 地图（< 100 行）。工程标准索引 + 人机交互规范     |
+| `docs/superpowers/lifecycle.md` | 人类 + AI | **唯一**完整开发生命周期（Mermaid 图 + 阶段说明）             |
+| `docs/superpowers/tips.md`      | 人类      | Issue/PR/Worktree 命令操作提示                                |
+| `docs/standards/`               | 人类 + AI | 工程标准实体。完整索引（领域、路径、适用阶段）见 `AGENTS.md`  |
+| `docs/superpowers/handoffs/`    | AI        | 跨会话上下文交接文档                                          |
+| `skills/`                       | AI        | 技能系统。可用技能清单见 `skills/meta/project-entry/SKILL.md` |
+| `scripts/`                      | 人类 + AI | 开发工具脚本，详见「Scripts 速查」                            |
 
 ## Scripts 速查
 
+> **平台后缀约定**：`.sh` = Bash（macOS / Linux / WSL），`.ps1` = PowerShell（Windows）。每个脚本功能相同，按你的环境选一种运行。
+
 | 脚本 | 是什么 | 什么时候用 | 怎么做 | 为什么 |
-|------|--------|-----------|--------|--------|
+| --- | --- | --- | --- | --- |
 | `setup-dev` | 安装 lefthook 并注册 Git hooks | 首次 clone 仓库后 | `./scripts/setup-dev.sh`（或 `.ps1`） | 不安装则提交不会经过任何安全检查 |
 | `check-agents-md` | 检查 `AGENTS.md` 是否 ≤ 100 行 | 每次提交前（自动） | lefthook 自动调用 | 防止系统 prompt 膨胀，降低 Agent 推理质量 |
 | `check-docs-structure` | 检查 handoff/skill 文件的 front matter 完整性 | 每次提交前（自动） | lefthook 自动调用 | 确保 AI 上下文交接文档和技能文件可被正确解析 |
@@ -64,36 +93,6 @@ cd <repo-name>
 | `check-ops-changelog` | 代码变更时强制要求更新 `.project/ops_changelog.md` | 每次提交前（自动） | lefthook 自动调用 | 保证每次代码变更都有审计记录 |
 | `sync-skills` | 将平台无关的 `skills/` 同步到 `.gemini/skills/` 等平台目录 | 修改 `skills/` 后手动运行 | `./scripts/sync-skills.sh`（或 `.ps1`） | `.gemini/skills/` 是副本，主库在 `skills/` |
 | `ai_reviewer` | 基于 DeepSeek API 对 PR 进行代码审查（需 `DEEPSEEK_API_KEY`） | CI 中自动触发 | GitHub Actions 自动调用 | 用标准文档统一审查尺度，减少人工漏检 |
-
-## 核心机制
-
-### 人类（Driver）的职责
-
-1. **启动任务**：提出需求，确认 AI 产出的 Spec 和 Plan
-2. **关键决策**：在 AI 暂停点（Pause Points）给出确认或指令
-3. **审查合并**：验证 AI 的产出物证据，批准 PR
-
-详细的人机交互规范见 `AGENTS.md` → `人机交互规范` 章节。
-
-### AI Agent 的执行纪律
-
-AI 遵循 Superpowers 技能系统：`brainstorming` → `writing-plans` → `executing-plans` → `verification-before-completion`。
-
-详细生命周期见 `docs/superpowers/lifecycle.md`。
-
-## 文档地图（SSOT）
-
-**本文档不重复具体流程，所有详细内容在以下文档中：**
-
-| 文档 | 面向读者 | 内容 |
-|------|---------|------|
-| `AGENTS.md` | AI Agent | 系统 prompt 地图（< 100 行）。工程标准索引 + 人机交互规范 |
-| `docs/superpowers/lifecycle.md` | 人类 + AI | **唯一**完整开发生命周期（Mermaid 图 + 阶段说明） |
-| `docs/superpowers/tips.md` | 人类 | Issue/PR/Worktree 命令操作提示 |
-| `docs/standards/` | 人类 + AI | 工程标准实体。完整索引（领域、路径、适用阶段）见 `AGENTS.md` |
-| `docs/superpowers/handoffs/` | AI | 跨会话上下文交接文档 |
-| `skills/` | AI | 技能系统。可用技能清单见 `skills/meta/project-entry/SKILL.md` |
-| `scripts/` | 人类 + AI | 开发工具脚本，详见「Scripts 速查」 |
 
 ## 常见问题
 
