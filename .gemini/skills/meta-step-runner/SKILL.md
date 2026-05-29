@@ -14,7 +14,7 @@ description: Use when a skill is marked with 'mode: step-by-step' to manage atom
 - 需要在长对话中保持执行进度不丢失。
 
 ## Core Pattern: Physical Checkpoints
-1. **State Persistence**: 在 `.gemini/skill_progress.md` 中维护当前任务的“物理存根”。
+1. **State Persistence**: 在 `.project/skill_progress.md` 中维护当前任务的“物理存根”。
 2. **Atomic Step-through**: 每回合只执行一个 `[ ]` 任务块。
 3. **User-in-the-loop**: 强制在每步完成后暂停，等待用户显式确认。
 
@@ -22,7 +22,7 @@ description: Use when a skill is marked with 'mode: step-by-step' to manage atom
 
 ### 1. Initialization (The Handshake)
 - **Action**: 检测到 `mode: step-by-step` 标志。
-- **Output**: 生成物理进度条文件 `.gemini/skill_progress.md`。
+- **Output**: 生成物理进度条文件 `.project/skill_progress.md`。
 - **Dependency Analysis (Upstream Logic)**: AI 必须分析步骤间的 `unlocks` 关系。例如：Step 2 依赖 Step 1 的文件产出。
 - **Prompt**: 
   > **「分步模式激活」**：
@@ -32,7 +32,7 @@ description: Use when a skill is marked with 'mode: step-by-step' to manage atom
 
 ### 2. Execution Loop
 - **Pre-action (Context Refresh)**: 
-  - 每一回合开始前必须执行 `read_file .gemini/skill_progress.md` 找回任务进度。
+  - 每一回合开始前必须执行 `read_file .project/skill_progress.md` 找回任务进度。
   - **滚动聚合 (Rolling Aggregation)**：若当前技能涉及文档或代码资产生成，必须同时执行 `read_file` 读取当前已生成的全量产物作为上下文背景。
 - **Action**: 执行当前第一个 `[ ]` 任务。
 - **Post-action (Write-Through)**: 
@@ -44,15 +44,15 @@ description: Use when a skill is marked with 'mode: step-by-step' to manage atom
 - **Quality Audit**: 在所有功能步 `[x]` 后，必须执行一个强制性的“终期质量审计”任务：
   - 通读全篇产物，检查术语一致性、逻辑连贯性。
   - **厚度校验**：确保细节覆盖度优于单一输出 baseline，防止因分步导致的内容缩水。
-- **Cleanup**: 审计通过后，物理删除 `.gemini/skill_progress.md`。
+- **Cleanup**: 审计通过后，物理删除 `.project/skill_progress.md`。
 - **Final Report**: 提交完整的执行报告。
 
 ## Resumption Logic
-若 AI 检测到 `.gemini/skill_progress.md` 已存在：
+若 AI 检测到 `.project/skill_progress.md` 已存在：
 - **MUST**: 优先读取该文件。
 - **MUST**: 主动询问：“检测到未完成的技能执行任务，是否恢复进度？”
 
 ## Red Flags
 - 忽略分步标志，一次性执行所有步骤。
-- 在任务未全部打钩前，擅自删除 `.gemini/skill_progress.md`。
+- 在任务未全部打钩前，擅自删除 `.project/skill_progress.md`。
 - 连续两回合不读取进度文件导致进度跑偏。

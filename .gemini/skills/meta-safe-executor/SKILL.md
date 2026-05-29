@@ -15,18 +15,18 @@ description: Use when performing write operations (CREATE, UPDATE, DELETE, MOVE)
 
 ## Core Pattern: The Sentinel Loop
 1. **Git Sentinel**: 写操作前必须确保当前状态已 Commit。
-2. **Semantic Logging**: 在 `.gemini/ops_changelog.md` 记录操作意图。
+2. **Semantic Logging**: 在 `.project/ops_changelog.md` 记录操作意图。
 3. **Safe Gate**: 破坏性动作强制弹窗确认。
 
 ## Implementation Workflow (Mandatory Audit Lock)
 
 ### 0. Mandatory Pre-Write Protocol (Audit Lock)
 **在执行任何写操作 (`write_file`, `replace`, `run_shell_command` 修改文件) 之前，AI 必须物理执行：**
-1.  **READ-LOG**: `read_file .gemini/ops_changelog.md` 确认审计表已就绪。
-2.  **BACKUP**: `cp .gemini/ops_changelog.md .gemini/ops_changelog.md.bak`（防清空保护）。
-3.  **PHYSICAL LOG**: 使用 append 模式追加操作意图到 `.gemini/ops_changelog.md`。
-4.  **VERIFY**: `read_file .gemini/ops_changelog.md` 确认追加成功且行数增加（禁止截断）。
-5.  **CLEANUP**: `rm .gemini/ops_changelog.md.bak`（验证成功后删除备份）。
+1.  **READ-LOG**: `read_file .project/ops_changelog.md` 确认审计表已就绪。
+2.  **BACKUP**: `cp .project/ops_changelog.md .project/ops_changelog.md.bak`（防清空保护）。
+3.  **PHYSICAL LOG**: 使用 append 模式追加操作意图到 `.project/ops_changelog.md`。
+4.  **VERIFY**: `read_file .project/ops_changelog.md` 确认追加成功且行数增加（禁止截断）。
+5.  **CLEANUP**: `rm .project/ops_changelog.md.bak`（验证成功后删除备份）。
 
 ### 1. Pre-operation Backup (Git Auto-Save)
 - **Check**: 执行 `git status --porcelain`。
@@ -36,7 +36,7 @@ description: Use when performing write operations (CREATE, UPDATE, DELETE, MOVE)
   ```
 
 ### 2. Operation Audit (Changelog)
-- 在 `.gemini/ops_changelog.md` 追加记录：
+- 在 `.project/ops_changelog.md` 追加记录：
   | Time | Action | Target | Reason | Commit_ID | Undo_CMD |
   | :--- | :--- | :--- | :--- | :--- | :--- |
   | {{NOW}} | {{ACTION}} | {{PATH}} | {{INTENT}} | {{HEAD_ID}} | {{RECOVERY_CMD}} |
@@ -52,7 +52,7 @@ description: Use when performing write operations (CREATE, UPDATE, DELETE, MOVE)
   > **确认执行？[Y/N]**
 
 ## Cleanup
-- 归档时由 `openspec-changes-archive` 负责将日志迁移至 `openspec/operations/` 审计库。
+- 审计日志按项目约定归档至 `.project/ops_changelog.md`。
 
 ## Red Flags
 - 绕过 Git 状态检查直接执行写操作。
