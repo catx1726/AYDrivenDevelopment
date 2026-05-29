@@ -25,3 +25,4 @@
 | 2026-05-28T17:00+08:00 | update | skills/meta/meta-safe-executor/SKILL.md | ops_changelog 写保护协议（backup + append-only + 行数校验） | 61dfb3f | git checkout HEAD~1 -- skills/meta/meta-safe-executor/SKILL.md |
 
 | 2026-05-29T08:30+08:00 | note | 多项文档与技能 | 补录：从 61dfb3f（2026-05-28T17:00）到 14bf0b8 期间，共 14 项变更未按 meta-safe-executor 协议记录审计日志。核心变更包括：Surgical Workflow 正式规范（a87d1dc+533c484+88d95bd）、project-entry 入口 skill（8c6c3b0）、母库/子库架构清理（137cced+0748601）、.gemini/→.project/ 迁移（91efa99）、skills 同步（14bf0b8）。已建立 lefthook 强制检查防止未来遗漏。 | — | git checkout 61dfb3f -- . |
+| 2026-05-29T08:45+08:00 | add | scripts/check-ops-changelog.ps1 | 增加 PowerShell 版本的 ops_changelog 强制检查脚本（与 sh 版本功能一致） | current | git rm scripts/check-ops-changelog.ps1 |
