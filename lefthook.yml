@@ -29,6 +29,10 @@ pre-commit:
       run: bash scripts/check-docs-structure.sh
       tags: [harness, standards]
 
+    check-ops-changelog:
+      run: bash scripts/check-ops-changelog.sh
+      tags: [safety, audit]
+
 commit-msg:
   commands:
     check-conventional-commit:

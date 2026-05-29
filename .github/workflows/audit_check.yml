@@ -13,7 +13,7 @@ jobs:
       - name: Verify Audit Log Update
         run: |
           # 提取除文档和配置外的所有代码变更文件
-          CHANGES=$(git diff --name-only origin/main...HEAD | grep -vE '^(\.github/|openspec/|README\.md|ARCHITECTURE\.md|GETTING_STARTED\.md|docs/)' || true)
+          CHANGES=$(git diff --name-only origin/main...HEAD | grep -vE '^(\.github/|README\.md|docs/)' || true)
 
           if [ -n "$CHANGES" ]; then
             # 如果有代码变更，强制检查 ops_changelog.md 是否在本次提交中
