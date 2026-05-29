@@ -26,3 +26,9 @@
 
 | 2026-05-29T08:30+08:00 | note | 多项文档与技能 | 补录：从 61dfb3f（2026-05-28T17:00）到 14bf0b8 期间，共 14 项变更未按 meta-safe-executor 协议记录审计日志。核心变更包括：Surgical Workflow 正式规范（a87d1dc+533c484+88d95bd）、project-entry 入口 skill（8c6c3b0）、母库/子库架构清理（137cced+0748601）、.gemini/→.project/ 迁移（91efa99）、skills 同步（14bf0b8）。已建立 lefthook 强制检查防止未来遗漏。 | — | git checkout 61dfb3f -- . |
 | 2026-05-29T08:45+08:00 | add | scripts/check-ops-changelog.ps1 | 增加 PowerShell 版本的 ops_changelog 强制检查脚本（与 sh 版本功能一致） | current | git rm scripts/check-ops-changelog.ps1 |
+
+| 2026-05-29T13:45+08:00 | update | README.md | 扩展项目结构树（补充 check-ops-changelog、ai_reviewer.py、.ps1 后缀），新增 Scripts 速查表（what/when/how/why） | current | git checkout HEAD~1 -- README.md
+
+| 2026-05-29T13:50+08:00 | refactor | README.md | 重排章节顺序（快速开始→项目结构→Scripts速查→核心机制→文档地图→FAQ），消除文档地图与项目结构的信息重复，scripts 行指向 Scripts 速查表 | current | git checkout HEAD~1 -- README.md
+
+| 2026-05-29T13:55+08:00 | update | README.md | 调整 Scripts 速查表表头顺序：脚本→是什么→什么时候用→怎么做→为什么（先概念后场景再操作） | current | git checkout HEAD~1 -- README.md
