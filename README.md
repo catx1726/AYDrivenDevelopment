@@ -100,5 +100,8 @@ AI 遵循 Superpowers 技能系统：`brainstorming` → `writing-plans` → `ex
 **Q: 如何验证 hooks 已正确安装？**
 A: `ls .git/hooks/pre-commit` —— 如果存在（不是 `.sample`），说明已生效。
 
+**Q: CHANGELOG.md 和 .project/ops_changelog.md 有什么区别？**
+A: `CHANGELOG.md` 面向**外部用户**——记录功能变更摘要（由 CI 自动更新）；`.project/ops_changelog.md` 面向**内部审计**——记录每次代码变更的操作意图和回滚命令（由开发者/AI 在提交前手动追加）。
+
 **Q: 不想装 lefthook 可以吗？**
 A: 可以跳过，但提交不会经过：AGENTS.md 大小检查、破坏性命令拦截、Conventional Commit 校验。建议至少运行一次 `./scripts/setup-dev.sh`。

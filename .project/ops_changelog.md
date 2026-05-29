@@ -32,3 +32,9 @@
 | 2026-05-29T13:50+08:00 | refactor | README.md | 重排章节顺序（快速开始→项目结构→Scripts速查→核心机制→文档地图→FAQ），消除文档地图与项目结构的信息重复，scripts 行指向 Scripts 速查表 | current | git checkout HEAD~1 -- README.md
 
 | 2026-05-29T13:55+08:00 | update | README.md | 调整 Scripts 速查表表头顺序：脚本→是什么→什么时候用→怎么做→为什么（先概念后场景再操作） | current | git checkout HEAD~1 -- README.md
+
+| 2026-05-29T14:00+08:00 | move | docs/standards/surgical-workflow-concept.md → docs/superpowers/ | 语义修正：流程文档不应放在可执行标准目录下 | current | git mv docs/superpowers/surgical-workflow-concept.md docs/standards/ && git checkout HEAD~1 -- AGENTS.md
+| 2026-05-29T14:00+08:00 | fix | AGENTS.md | 移除 dangling reference（using-git-worktrees skill 不存在）；更新 surgical-workflow 路径 | current | git checkout HEAD~1 -- AGENTS.md
+| 2026-05-29T14:00+08:00 | delete | docs/standards/.DS_Store | 删除 macOS 系统垃圾文件，.gitignore 已追加 .DS_Store | current | git checkout HEAD~1 -- .gitignore && git checkout HEAD -- docs/standards/.DS_Store
+| 2026-05-29T14:00+08:00 | add | docs/standards/code-standards-QUICK-REF.md | 从 code-standards submodule（2386行）提取精华，生成快速参考（不修改源数据） | current | git rm docs/standards/code-standards-QUICK-REF.md
+| 2026-05-29T14:00+08:00 | update | README.md | 常见问题中补充 CHANGELOG.md 与 ops_changelog.md 的分工说明 | current | git checkout HEAD~1 -- README.md
