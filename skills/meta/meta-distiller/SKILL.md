@@ -26,7 +26,7 @@ mode: step-by-step
 - 建立“方法论（Skill）”与“实现（Pattern）”的闭环。
 
 ## Core Pattern: Controlled Evolution
-1. **Staging Approval**: 所有提纯资产优先写入 `.gemini/distill_stage/`，禁止直接写入 `skills/` 主目录。
+1. **Staging Approval**: 所有提纯资产优先写入 `.project/distill_stage/`，禁止直接写入 `skills/` 主目录。
 2. **Skill-Pattern Linkage**: 
    - **Skill (common-xxx.md)**: 定义“为什么用”、“何时用”，并包含指向 Pattern 的 Markdown 链接。
    - **Pattern (patterns/xxx/)**: 提供 index 三件套（代码、测试、说明）。
@@ -42,14 +42,14 @@ mode: step-by-step
 - [ ] **提取 IPO 模型**：基于识别出的核心文件，识别 Input（输入参数）、Process（计算逻辑/算法）、Output（返回结构），并记录在当前会话。
 
 ### 2. Staging Construction (Sub-Project Local)
-- **建立暂存结构**：在项目根目录创建 `.gemini/distill_stage/<name>/`。
+- **建立暂存结构**：在项目根目录创建 `.project/distill_stage/<name>/`。
 - [ ] **执行参数化提取**：将代码中的业务变量替换为 `{{VAR}}`，写入逻辑主文件。
 - [ ] **生成测试规格**：编写符合项目测试标准的测试文件。
 
 - [ ] **编写资产说明**：生成 `README.md`，明确契约与安装依赖。
 
 ### 3. Knowledge Distillation & Reflection
-- [ ] **生成 Skill 初稿**：在 `.gemini/distill_stage/skills/` 生成 `common-<name>.md`。
+- [ ] **生成 Skill 初稿**：在 `.project/distill_stage/skills/` 生成 `common-<name>.md`。
 - [ ] **自动生成任务总结 (Reflection)**：基于 SOP1 的总结模型，自动生成包含元数据的 Markdown 总结：
   - **Metadata**: 自动填充 `task_id`, `type`, `affected_files`。
   - **Knowledge Points**: 总结本次任务中涉及的架构决策与防御式编程实现。

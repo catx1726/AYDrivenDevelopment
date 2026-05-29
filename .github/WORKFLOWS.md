@@ -31,16 +31,16 @@ on:
 **执行逻辑**：
 1. 检出代码（`fetch-depth: 0` 获取完整历史）
 2. 提取除文档和配置外的所有代码变更文件
-3. 如果有代码变更，检查 `.gemini/ops_changelog.md` 是否在变更中
+3. 如果有代码变更，检查 `.project/ops_changelog.md` 是否在变更中
 4. 如果没有审计日志，退出并报错
 
 **检查范围**：
 - **排除目录**：`.github/`, `openspec/`, `README.md`, `ARCHITECTURE.md`, `GETTING_STARTED.md`, `docs/`
-- **检查文件**：`.gemini/ops_changelog.md`
+- **检查文件**：`.project/ops_changelog.md`
 
 **失败示例**：
 ```
-❌ **物理熔断**: 检测到代码变更，但未在 .gemini/ops_changelog.md 中提交审计日志！
+❌ **物理熔断**: 检测到代码变更，但未在 .project/ops_changelog.md 中提交审计日志！
 请记录变更意图与 Undo_CMD。
 ```
 
@@ -50,7 +50,7 @@ on:
 ```
 
 **合规要求**：
-任何代码变更都必须在 `.gemini/ops_changelog.md` 中记录：
+任何代码变更都必须在 `.project/ops_changelog.md` 中记录：
 ```markdown
 | Time | Action | Target | Reason | Commit_ID | Undo_CMD |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -199,7 +199,7 @@ graph TD
 
 **错误信息**：
 ```
-❌ **物理熔断**: 检测到代码变更，但未在 .gemini/ops_changelog.md 中提交审计日志！
+❌ **物理熔断**: 检测到代码变更，但未在 .project/ops_changelog.md 中提交审计日志！
 ```
 
 **原因**：
@@ -208,13 +208,13 @@ graph TD
 **解决方案**：
 ```bash
 # 1. 编辑审计日志
-nano .gemini/ops_changelog.md
+nano .project/ops_changelog.md
 
 # 2. 添加变更记录
 | 2026-04-07 | UPDATE | src/scrapers/linuxdo.js | 优化页面加载策略 | pending | git checkout src/scrapers/linuxdo.js |
 
 # 3. 提交更新
-git add .gemini/ops_changelog.md
+git add .project/ops_changelog.md
 git commit -m "chore: 更新审计日志"
 git push
 ```

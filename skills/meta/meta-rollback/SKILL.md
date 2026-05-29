@@ -29,7 +29,7 @@ description: Use when needing to undo recent AI operations or revert the reposit
 
 ## Implementation Workflow
 
-1. **Scan**: 读取 `.gemini/ops_changelog.md` 获取最新的审计快照。
+1. **Scan**: 读取 `.project/ops_changelog.md` 获取最新的审计快照。
 2. **Context Check**: 执行 `git status` 确保回滚不会导致非 AI 操作的代码丢失。
 3. **Execution**: 执行回滚命令。
 4. **Log Patch**: 在 Changelog 中记录一次 `ROLLBACK` 动作。

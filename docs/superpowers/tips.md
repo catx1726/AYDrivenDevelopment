@@ -100,6 +100,6 @@ bash scripts/sync-skills.sh --target .gemini/skills --target .claude/skills
 - **日志标准**：级别正确 / 无敏感信息 / 结构化 / 上下文完整
 - **文档结构**：文件名规范 / front matter 完整 / 目录正确
 
-违规记录：`docs/superpowers/handoffs/` 中的任务 handoff 或 `.gemini/compliance_log.md`
+违规记录：`docs/superpowers/handoffs/` 中的任务 handoff 或 `.project/compliance_log.md`
 
 > **Surgical Workflow 精简版**：使用手术切入式工作流时，只需勾选 3 项阻断项（输入校验 / 无敏感信息 / 测试通过），无需完整 checklist。详见 `docs/standards/surgical-workflow-concept.md`。

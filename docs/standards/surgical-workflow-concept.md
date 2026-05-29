@@ -187,7 +187,7 @@ Surgical Workflow 不要求完整的 `meta-compliance-checker` checklist，
 **动作：**
 
 1. **Git 提交**：使用 Conventional Commits（`fix:` 或 `refactor:`）。
-2. **审计日志**：在 `.gemini/ops_changelog.md` 追加记录（遵循写保护协议）。
+2. **审计日志**：在 `.project/ops_changelog.md` 追加记录（遵循写保护协议）。
 3. **决策留档**（如适用）：如果本次改动识别出了可复用模式或重要陷阱，
    按 `context-management-strategy.md` 的中间决策留档机制追加到当前任务 handoff。
 4. **清理**：删除临时 MRI 文件（除非用户要求保留）。

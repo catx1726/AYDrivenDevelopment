@@ -84,7 +84,7 @@ description: Use before claiming task completion to enforce standards compliance
 
 ### 记录格式
 
-每次 AI 违反标准且被指出，必须在 `.gemini/compliance_log.md` 追加记录：
+每次 AI 违反标准且被指出，必须在 `.project/compliance_log.md` 追加记录：
 
 ```markdown
 | 时间 | 标准 | 违规描述 | 修复措施 | 状态 |

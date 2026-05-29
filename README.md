@@ -72,8 +72,10 @@ AI 遵循 Superpowers 技能系统：`brainstorming` → `writing-plans` → `ex
 │   ├── forbid-destructive.sh   # 破坏性命令检测
 │   ├── check-conventional-commit.sh  # Commit message 检查
 │   └── sync-skills.sh          # 技能同步（跨平台）
-└── .gemini/
-    └── ops_changelog.md        # 操作审计日志
+└── .project/
+    ├── ops_changelog.md        # 操作审计日志
+    ├── compliance_log.md       # 合规审计日志
+    └── distill_stage/          # 资产提纯暂存区
 ```
 
 ## 常见问题
