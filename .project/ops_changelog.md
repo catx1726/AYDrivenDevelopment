@@ -44,3 +44,5 @@
 
 | 2026-05-29T14:10+08:00 | update | README.md | 用户重新排版：核心机制前置，文档地图后移，QA 改回多行格式 | current | git checkout HEAD~1 -- README.md
 | 2026-05-29T14:10+08:00 | fix | docs/standards/test-driven-development.md + logging-standards.md + api-design-standards.md | 将 dangling reference（链接到不存在的文件）改为纯文本，保留上下文信息 | current | git checkout HEAD~1 -- docs/standards/test-driven-development.md docs/standards/logging-standards.md docs/standards/api-design-standards.md
+
+| 2026-05-29T14:15+08:00 | close | GitHub issues #7 #8 | 清理占位符空 issue（标题和正文均为模板默认值，无实际内容） | — | gh issue reopen 7 8 --repo catx1726/YOU-DRIVE-SOP
