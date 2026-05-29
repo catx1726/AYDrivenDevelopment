@@ -38,3 +38,6 @@
 | 2026-05-29T14:00+08:00 | delete | docs/standards/.DS_Store | 删除 macOS 系统垃圾文件，.gitignore 已追加 .DS_Store | current | git checkout HEAD~1 -- .gitignore && git checkout HEAD -- docs/standards/.DS_Store
 | 2026-05-29T14:00+08:00 | add | docs/standards/code-standards-QUICK-REF.md | 从 code-standards submodule（2386行）提取精华，生成快速参考（不修改源数据） | current | git rm docs/standards/code-standards-QUICK-REF.md
 | 2026-05-29T14:00+08:00 | update | README.md | 常见问题中补充 CHANGELOG.md 与 ops_changelog.md 的分工说明 | current | git checkout HEAD~1 -- README.md
+
+| 2026-05-29T14:05+08:00 | fix | docs/superpowers/tips.md | 修复 surgical-workflow-concept.md 的引用路径（standards → superpowers） | current | git checkout HEAD~1 -- docs/superpowers/tips.md
+| 2026-05-29T14:05+08:00 | refactor | README.md | 优化文档地图：standards 和 skills 行指向 AGENTS.md/project-entry，消除与 AGENTS.md 标准索引的重复 | current | git checkout HEAD~1 -- README.md

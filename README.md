@@ -90,9 +90,9 @@ AI 遵循 Superpowers 技能系统：`brainstorming` → `writing-plans` → `ex
 | `AGENTS.md` | AI Agent | 系统 prompt 地图（< 100 行）。工程标准索引 + 人机交互规范 |
 | `docs/superpowers/lifecycle.md` | 人类 + AI | **唯一**完整开发生命周期（Mermaid 图 + 阶段说明） |
 | `docs/superpowers/tips.md` | 人类 | Issue/PR/Worktree 命令操作提示 |
-| `docs/standards/` | 人类 + AI | 工程标准（代码规范、TDD、API 设计、安全等） |
+| `docs/standards/` | 人类 + AI | 工程标准实体。完整索引（领域、路径、适用阶段）见 `AGENTS.md` |
 | `docs/superpowers/handoffs/` | AI | 跨会话上下文交接文档 |
-| `skills/` | AI | 技能系统（project-entry、meta-safe-executor 等） |
+| `skills/` | AI | 技能系统。可用技能清单见 `skills/meta/project-entry/SKILL.md` |
 | `scripts/` | 人类 + AI | 开发工具脚本，详见「Scripts 速查」 |
 
 ## 常见问题
