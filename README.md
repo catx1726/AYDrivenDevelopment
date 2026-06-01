@@ -17,6 +17,19 @@ cd <repo-name>
 
 > `setup-dev` 会自动安装 lefthook 并把 hooks 注册到 `.git/hooks/`。不安装则提交不会经过 AGENTS.md 大小检查、破坏性命令拦截等安全机制。
 
+## 按任务开始
+
+根据你要做的事，直接对 AI 描述需求即可。AI 会读取 `AGENTS.md` 并自动选择合适的工作流。
+
+| 你要做什么 | 对 AI 说的话 | AI 自动走什么流程 |
+|-----------|-------------|-------------------|
+| 快速修复 Bug | "login 函数空密码时崩溃，请修复" | Surgical Workflow |
+| 全新功能开发 | "增加用户注册功能，先写 Spec" | 标准生命周期 |
+| 不确定改动范围 | "请先做逻辑 MRI 评估影响范围" | 由 AI 判断 |
+| 审查 PR | （你作为 Reviewer）看 `review-standards` | — |
+
+> 详细使用指南（各平台配置、完整对话示例、纠正 AI 的话术）见 `docs/superpowers/human-guide.md`
+
 ## 核心机制
 
 ### 人类（Driver）的职责
@@ -73,6 +86,7 @@ AI 遵循 Superpowers 技能系统：`brainstorming` → `writing-plans` → `ex
 | ------------------------------- | --------- | ------------------------------------------------------------- |
 | `AGENTS.md`                     | AI Agent  | 系统 prompt 地图（< 100 行）。工程标准索引 + 人机交互规范     |
 | `docs/superpowers/lifecycle.md` | 人类 + AI | **唯一**完整开发生命周期（Mermaid 图 + 阶段说明）             |
+| `docs/superpowers/human-guide.md` | 人类    | **本模板使用指南**：按任务类型导航 + 纠正 AI 话术           |
 | `docs/superpowers/tips.md`      | 人类      | Issue/PR/Worktree 命令操作提示                                |
 | `docs/standards/`               | 人类 + AI | 工程标准实体。完整索引（领域、路径、适用阶段）见 `AGENTS.md`  |
 | `docs/superpowers/handoffs/`    | AI        | 跨会话上下文交接文档                                          |
