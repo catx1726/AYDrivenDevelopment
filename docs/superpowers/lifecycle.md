@@ -13,7 +13,7 @@ sequenceDiagram
     Note over D, AI: 1-3. 启动阶段 (Launch)
     AI->>AI: 工作流选择检查<br/><i>(范围 ≤10 文件 + 目标明确 + 无架构变更？→ Surgical Workflow)</i>
     alt 使用 Surgical Workflow
-        AI->>AI: 按 surgical-workflow-concept.md 执行<br/><i>(逻辑 MRI → 安全垫 → 极简计划 → 增量开发 → 闭环)</i>
+        AI->>AI: 按 surgical-workflow-concept.md 执行<br/><i>(轻量级 brainstorming → 逻辑 MRI → 安全垫 → 极简计划 → 增量开发 → 闭环)</i>
     else 使用标准生命周期
         AI->>AI: activate_skill brainstorming (需求探索 & 编写 Spec)<br/><i>(AI 暂停，等待 Driver 确认设计规范 Spec 位于 docs/superpowers/specs/)</i>
         D->>AI: 确认 Spec
@@ -24,7 +24,7 @@ sequenceDiagram
     AI->>AI: activate_skill writing-plans (生成计划 & 编写 Plan)<br/><i>(AI 暂停，等待 Driver 批准 Plan 位于 docs/superpowers/plans/)</i>
     AI->>AI: activate_skill executing-plans (按 Task 逐步执行计划)<br/><i>(若执行失败，AI 重试/升级给 Driver)</i>
     AI->>AI: activate_skill meta-safe-executor (安全审计)<br/><i>(若检测到风险，AI 报告给 Driver，等待指令)</i>
-    Note over AI: 上下文管理检查<br/><i>(>30min 或 >25 文件 → 执行 Compaction/Offloading/Reset)</i>
+    Note over AI: 上下文管理检查<br/><i>AI 每完成 3-5 个 subtask 运行 `bash scripts/context-guard.sh`<br/>若建议非 NONE：执行 Compaction/Offloading/Reset（RESET 需 Driver 确认）</i>
 
     Note over AI, D: 7-9. 质量与验证 (Test & Verify)
     AI->>AI: activate_skill test-driven-development (TDD 循环)<br/><i>(遇歧义时，AI 进入"等待 Driver 问询/澄清"状态)</i>
@@ -50,7 +50,7 @@ sequenceDiagram
 | 阶段 | 名称 | 核心技能 | 产出物 |
 |------|------|----------|--------|
 | 1-3 | 启动 (Launch) | `brainstorming` | Spec + Issue |
-| 4-6 | 计划与执行 (Plan & Act) | `writing-plans`, `executing-plans`, `meta-safe-executor` | Plan + 代码变更 |
+| 4-6 | 计划与执行 (Plan & Act) | `writing-plans`, `executing-plans`, `meta-safe-executor`, `context-guard` | Plan + 代码变更 + 上下文健康度检查 |
 | 7-9 | 质量与验证 (Test & Verify) | `test-driven-development`, `verification-before-completion`, `meta-runtime-evaluator` | 测试通过 + 三层验证证据 |
 | 10-13 | 提纯与闭环 (Distill & Close) | `meta-distiller` | PR + 审计日志 |
 | 14 | 反馈与反思 | `perform_self_reflection` | ops_changelog 更新 |

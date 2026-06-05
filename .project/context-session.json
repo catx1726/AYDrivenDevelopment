@@ -1,0 +1,9 @@
+{
+  "session_id": "sess-YYYYMMDD-NNN",
+  "task_id": "TASK-XXX",
+  "started_at": "2026-06-03T09:00:00+08:00",
+  "last_checked_at": null,
+  "strategy_checks": [],
+  "reset_count": 0,
+  "notes": "AI 或 Driver 应在会话开始时填写此文件。每次运行 context-guard 后追加 strategy_checks 记录。"
+}

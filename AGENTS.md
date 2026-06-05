@@ -14,16 +14,15 @@ AI 引擎在执行任务时，必须参考以下标准文档以确保工程质�
 | **合规检查** | `skills/custom/meta-compliance-checker/SKILL.md` | 执行/验证 |
 | **手术切入式工作流** | `docs/superpowers/surgical-workflow-concept.md` | 执行 (Act) |
 | **上下文管理** | `docs/superpowers/context-management-strategy.md` | 全周期 |
+| **上下文工具链** | `docs/superpowers/context-toolchain.md` | 执行 (Act) |
 | **代码审查** | `docs/standards/review-standards/review/reviewer/` | 闭环 (Close) |
 | **提交描述** | `docs/standards/review-standards/review/developer/` | 闭环 (Close) |
 
 ---
 
-## 人机交互规范 (Human-in-the-Loop Standards)
+## 执行契约 (Execution Contract)
 
-完整生命周期见 `docs/superpowers/lifecycle.md`。
-
-### 1. AI 暂停点 (AI Pause Points)
+### 人机交互暂停点
 
 | 阶段 | 暂停点 | 等待内容 |
 | :--- | :--- | :--- |
@@ -34,41 +33,29 @@ AI 引擎在执行任务时，必须参考以下标准文档以确保工程质�
 | **提纯** | `meta-distiller` 后 | Driver 审查资产 |
 | **闭环** | 合并请求创建后 | Driver 合并确认 |
 
-### 2. AI 升级条件 (Escalation Conditions)
+**升级条件**：`executing-plans` 连续失败 3 次以上 / `meta-safe-executor` 检测到高风险 / TDD 歧义阻塞 / 资源不足。详见 `docs/superpowers/lifecycle.md`。
 
-- **执行失败**：`executing-plans` 连续失败 3 次以上。
-- **风险检测**：`meta-safe-executor` 检测到高风险操作。
-- **歧义阻塞**：TDD 测试中发现需求歧义，无法继续。
-- **资源不足**：需要外部 API 密钥、设计资源或跨团队协调。
+### 上下文管理
 
-### 3. 证据呈现规范 (Evidence Presentation)
+- **会话启动**：若存在 handoff，优先阅读 `docs/superpowers/handoffs/` 下最新文档
+- **检查频率**：每完成 3-5 个 subtask 运行 `bash scripts/context-guard.sh`，将结果呈现给 Driver
+- **禁止事项**：
+  - ❌ `context-guard` 建议 RESET 时未经 Driver 确认就继续
+  - ❌ 同一任务 Reset 超过 3 次不拆分
+  - ❌ 新会话不阅读 handoff 就声称"我了解了"
 
-AI 在验证阶段必须按三层架构呈现证据：
+完整策略见 `docs/superpowers/context-management-strategy.md`。
 
-```markdown
-### Layer 1 自动化证据（CI/Hook）
-- [ ] lint / format / type-check：0 errors
-- [ ] CI 强制检查：audit_check + spec_plan_sync
+### 验证证据
 
-### Layer 2 计算型证据（Generator 自检）
-- [ ] 单元测试通过率：X/Y
-- [ ] 构建命令：exit 0
-
-### Layer 3 推理型证据（独立 Evaluator）
-- [ ] 运行时行为验证：PASS/FAIL + 截图/日志
-- [ ] 需求满足度：Sprint Contract 逐项检查
-```
+验证阶段按三层架构（Layer 1 CI/Hook → Layer 2 Generator 自检 → Layer 3 独立 Evaluator）呈现证据。详见 `skills/meta/meta-runtime-evaluator/SKILL.md`。
 
 ---
 
 ## 快速参考
 
-- **技能系统入口**: 任务启动时检查 `skills/` 下是否有匹配 skill (`skills/meta/project-entry/SKILL.md`)
-- **新成员入门**: `README.md`
 - **生命周期详解**: `docs/superpowers/lifecycle.md`
-- **Issue/PR 最佳实践**: `docs/superpowers/tips.md`
-- **当前任务上下文**: 如存在任务 handoff，Launch 阶段优先读取
-- **三层验证架构**: `skills/meta/meta-runtime-evaluator/SKILL.md`
+- **上下文管理**: `docs/superpowers/context-management-strategy.md`
+- **手术工作流**: `docs/superpowers/surgical-workflow-concept.md`
 - **合规检查**: `skills/custom/meta-compliance-checker/SKILL.md`
-- **技能同步脚本**: `scripts/sync-skills.sh` / `.ps1`
-- **手术切入式工作流**: `docs/superpowers/surgical-workflow-concept.md`
+- **新成员入门**: `README.md`

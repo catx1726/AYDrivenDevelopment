@@ -7,6 +7,10 @@ $ErrorCount = 0
 Write-Host "🔍 Checking handoff files..."
 $handoffs = Get-ChildItem -Path "docs/superpowers/handoffs" -Filter "*.md" -ErrorAction SilentlyContinue
 foreach ($f in $handoffs) {
+    # Skip index files (they are auto-generated or manually maintained indices, not handoffs)
+    if ($f.Name -eq "INDEX.md") {
+        continue
+    }
     $content = Get-Content -Path $f.FullName -Raw
     if ($content -notmatch "^handoff_id:") {
         Write-Host "  ❌ $($f.Name): missing 'handoff_id' in front matter"

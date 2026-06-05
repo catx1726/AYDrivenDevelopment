@@ -10,6 +10,10 @@ ERRORS=0
 echo "🔍 Checking handoff files..."
 for f in docs/superpowers/handoffs/*.md; do
   [ -f "$f" ] || continue
+  # Skip index files (they are auto-generated or manually maintained indices, not handoffs)
+  if [[ "$(basename "$f")" == "INDEX.md" ]]; then
+    continue
+  fi
   if ! grep -q "^handoff_id:" "$f"; then
     echo "  ❌ $f: missing 'handoff_id' in front matter"
     ((ERRORS++))
