@@ -17,6 +17,54 @@ cd <repo-name>
 
 > `setup-dev` 会自动安装 lefthook 并把 hooks 注册到 `.git/hooks/`。不安装则提交不会经过 AGENTS.md 大小检查、破坏性命令拦截等安全机制。
 
+## 关于 Superpowers
+
+本模板基于 [obra/superpowers](https://github.com/obra/superpowers) 构建。Superpowers 是一个开源的 AI 开发技能框架，定义了标准化的开发流程与可复用的 agent 技能。
+
+**核心工作流：**
+
+1. **brainstorming** — 需求澄清与设计确认（Socratic questioning）
+2. **writing-plans** — 生成可执行的实施计划（one task per file）
+3. **executing-plans** — 按步骤执行并验证
+4. **test-driven-development** — RED-GREEN-REFACTOR 循环
+5. **requesting-code-review** — 代码审查与反馈
+
+**完整技能库：** 测试（TDD）、调试（systematic-debugging）、
+协作（brainstorming/writing-plans/executing-plans/subagent-driven-development）、
+元技能（writing-skills/using-superpowers）等 14+ 个可组合技能。
+
+### 安装 Superpowers
+
+按你的 AI 工具选择安装方式：
+
+| AI 工具 | 安装方式 |
+|---------|---------|
+| **Claude Code** | `/plugin install superpowers@claude-plugins-official` |
+| **Codex CLI** | `/plugins` → 搜索 `superpowers` → `Install Plugin` |
+| **Codex App** | 侧边栏 Plugins → Coding section → `+` next to Superpowers |
+| **Gemini CLI** | `gemini extensions install https://github.com/obra/superpowers` |
+| **OpenCode** | `Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md` |
+| **Cursor** | `/add-plugin superpowers` 或在 marketplace 搜索 |
+| **GitHub Copilot CLI** | `copilot plugin marketplace add obra/superpowers-marketplace` → `copilot plugin install superpowers@superpowers-marketplace` |
+| **Factory Droid** | `droid plugin marketplace add https://github.com/obra/superpowers` → `droid plugin install superpowers@superpowers` |
+
+### 项目内集成（Kimi Code CLI / 通用）
+
+如果你的 AI 工具不支持上述插件市场，可将 Superpowers 技能库直接集成到本模板中：
+
+```bash
+# 方式 1：直接克隆（推荐，简单）
+git clone https://github.com/obra/superpowers.git skills/superpowers
+
+# 方式 2：Git submodule（方便后续更新）
+git submodule add https://github.com/obra/superpowers.git skills/superpowers
+```
+
+> ⚠️ **注意**：Superpowers 的 skills 主要为 Claude Code / Codex CLI 设计，
+> 部分平台特定工具调用（如 `TodoWrite`、`Skill`）在不同 AI 工具间存在差异。
+> 以 Kimi Code CLI 为例，它会读取 SKILL.md 中的文本指令并执行，
+> 但特定工具行为会以纯文本形式完成。
+
 ## 按任务开始
 
 根据你要做的事，直接对 AI 描述需求即可。AI 会读取 `AGENTS.md` 并自动选择合适的工作流。

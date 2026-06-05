@@ -43,6 +43,7 @@ sequenceDiagram
 
     Note over AI: 14. 流程反馈与自我反思 (Feedback & Self-Reflection)
     AI->>AI: perform_self_reflection & update_ops_changelog<br/><i>(总结执行情况，记录挑战，为智力演进提供输入)</i>
+    end
 ```
 
 ## 阶段说明
