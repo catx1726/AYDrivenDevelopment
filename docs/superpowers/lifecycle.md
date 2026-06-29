@@ -41,6 +41,11 @@ sequenceDiagram
     CI->>VCS: git commit (自动更新 CHANGELOG.md)
     AI->>VCS: gh issue close (Issue 关闭)<br/><i>(仅在 PR 合并且 Driver 确认后执行)</i>
 
+    Note over AI, D: 13.1 审查回复同步 (Review Reply Sync)
+    AI->>AI: 汇总本轮 CR 修改内容并生成本轮同步评论<br/><i>(依据 .github/REVIEW_REPLY_TEMPLATE.md，在 PR 下评论已修复项、验证结果及待讨论点)</i>
+    AI->>D: 等待 Driver 审核评论内容
+    D->>VCS: gh pr comment (Driver 确认后发布评论)
+
     Note over AI: 14. 流程反馈与自我反思 (Feedback & Self-Reflection)
     AI->>AI: perform_self_reflection & update_ops_changelog<br/><i>(总结执行情况，记录挑战，为智力演进提供输入)</i>
     end
