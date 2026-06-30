@@ -48,6 +48,16 @@ sequenceDiagram
 
     Note over AI: 14. 流程反馈与自我反思 (Feedback & Self-Reflection)
     AI->>AI: perform_self_reflection & update_ops_changelog<br/><i>(总结执行情况，记录挑战，为智力演进提供输入)</i>
+
+    Note over AI, D: 14.1 棘手问题归档 (Debugging Recipes)
+    AI->>AI: 判断本轮是否遇到棘手问题<br/><i>(标准：≥2 轮定位、跨组件/context、根因与表象不一致、未来可能复现)</i>
+    alt 符合归档标准
+        AI->>VCS: 在 docs/playbooks/ 下新建 YYYY-MM-DD-<slug>.md<br/><i>(按 README 模板记录现象、根因、调试路径、修复、经验教训)</i>
+        AI->>D: 等待 Driver 审核案例内容
+    end
+
+    Note over AI: 15. 流程反馈与自我反思 (Feedback & Self-Reflection)
+    AI->>AI: perform_self_reflection & update_ops_changelog<br/><i>(总结执行情况，记录挑战，为智力演进提供输入)</i>
     end
 ```
 
@@ -59,4 +69,6 @@ sequenceDiagram
 | 4-6 | 计划与执行 (Plan & Act) | `writing-plans`, `executing-plans`, `meta-safe-executor`, `context-guard` | Plan + 代码变更 + 上下文健康度检查 |
 | 7-9 | 质量与验证 (Test & Verify) | `test-driven-development`, `verification-before-completion`, `meta-runtime-evaluator` | 测试通过 + 三层验证证据 |
 | 10-13 | 提纯与闭环 (Distill & Close) | `meta-distiller` | PR + 审计日志 |
+| 13.1 | 审查回复同步 | `REVIEW_REPLY_TEMPLATE` | PR 评论 |
 | 14 | 反馈与反思 | `perform_self_reflection` | ops_changelog 更新 |
+| 14.1 | 棘手问题归档 | `docs/playbooks/README.md` | Debugging Recipe |
