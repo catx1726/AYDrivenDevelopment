@@ -19,6 +19,7 @@ This is not optional. Check for matching skills **before** responding or taking 
 | meta-compliance-checker | `skills/custom/meta-compliance-checker/SKILL.md` | Before claiming task completion |
 | meta-runtime-evaluator | `skills/meta/meta-runtime-evaluator/SKILL.md` | After Layer 2 verification passes, for runtime behavior evaluation |
 | meta-distiller | `skills/meta/meta-distiller/SKILL.md` | When distilling logic to reusable assets |
+| meta-feature-extractor | `skills/meta/meta-feature-extractor/SKILL.md` | When extracting a whole feature/business into a reproduction-ready design doc (reverse from code or forward from PRD). Complements meta-distiller (which handles pure code logic, not whole features) |
 | meta-rollback | `skills/meta/meta-rollback/SKILL.md` | When needing to undo recent operations |
 | meta-step-runner | `skills/meta/meta-step-runner/SKILL.md` | When executing a skill marked `mode: step-by-step` |
 | meta-path-discovery | `skills/meta/meta-path-discovery/SKILL.md` | When locating the project root directory or verifying working directory |

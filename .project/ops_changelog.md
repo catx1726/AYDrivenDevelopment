@@ -53,3 +53,5 @@
 | 2026-06-03T09:35+08:00 | update | AGENTS.md + surgical-workflow-concept.md + lifecycle.md + check-docs-structure.* | (1) AGENTS.md 精简为执行契约（111→55行），证据呈现与上下文管理细节移入子文档；(2) Surgical Workflow 集成 superpowers brainstorming（轻量级执行+极简 design doc）、Logic MRI 增加需求-代码对齐检查与 Mermaid 歧义暴露；(3) lifecycle.md Mermaid 图同步更新；(4) check-docs-structure 排除 INDEX.md | current | git checkout HEAD~1 -- AGENTS.md docs/superpowers/surgical-workflow-concept.md docs/superpowers/lifecycle.md && git checkout HEAD~1 -- scripts/check-docs-structure.*
 
 | 2026-06-03T09:45+08:00 | update | README.md | 新增「关于 Superpowers」章节：介绍 superpowers 框架、各 AI 工具安装方式、项目内集成指南（skills/ 目录克隆/submodule） | current | git checkout HEAD~1 -- README.md
+
+| 2026-07-23T11:09+08:00 | add | skills/meta/meta-feature-extractor/SKILL.md + skills/meta/project-entry/SKILL.md | 新增 meta-feature-extractor 元技能：把整个功能/业务提炼为「AI 可重建 + 人可理解」的复现设计文档（7 层蓝图 + JTBD/DDD/C4 等框架映射 + 逆向代码/正向 PRD 双向）；填补 meta-distiller（纯代码逻辑）之上的「整功能提炼」空白。同步在 project-entry 发现索引注册该技能 | current | git rm -r skills/meta/meta-feature-extractor/ && git checkout HEAD -- skills/meta/project-entry/SKILL.md
