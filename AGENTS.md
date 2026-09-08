@@ -55,6 +55,7 @@ AI 引擎在执行任务时，必须参考以下标准文档以确保工程质�
 ## 快速参考
 
 - **生命周期详解**: `docs/superpowers/lifecycle.md`
+- **子库接入**: `docs/superpowers/child-repo-guide.md`（工作目录非本仓库时必读：规范读母库、产物写子库）
 - **上下文管理**: `docs/superpowers/context-management-strategy.md`
 - **手术工作流**: `docs/superpowers/surgical-workflow-concept.md`
 - **合规检查**: `skills/custom/meta-compliance-checker/SKILL.md`
