@@ -38,8 +38,8 @@ created_at: ${DATE}
 - [ ] 子任务 D：需要做什么
 
 ## 关键决策
-<!-- 已做出的、新会话必须知道的决策 -->
-- 决策 1：[链接到决策归档文件]
+<!-- 必须链接到 docs/superpowers/decisions/ 下的归档文件；若有未归档决策，先用 scripts/archive-decision 留档 -->
+- 决策 1：[链接到决策归档文件 docs/superpowers/decisions/xxx.md]
 - 决策 2：简要描述
 
 ## 已知陷阱

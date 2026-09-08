@@ -1,4 +1,4 @@
-# Generate Handoff — 生成标准化上下文交接文档 (PowerShell)
+﻿# Generate Handoff — 生成标准化上下文交接文档 (PowerShell)
 # 用法: .\scripts\generate-handoff.ps1 <task-id> [status]
 # 示例: .\scripts\generate-handoff.ps1 T-123 in_progress
 
@@ -14,7 +14,8 @@ $FILENAME = "docs/superpowers/handoffs/${TASK_ID}-${TIMESTAMP}.md"
 
 New-Item -ItemType Directory -Force -Path "docs/superpowers/handoffs" | Out-Null
 
-$CONTENT = @"---
+$CONTENT = @"
+---
 handoff_id: ${TASK_ID}-${TIMESTAMP}
 source_session: $env:USERNAME@$env:COMPUTERNAME
 target_session: <新会话标识>
@@ -38,8 +39,8 @@ created_at: ${DATE}
 - [ ] 子任务 D：需要做什么
 
 ## 关键决策
-<!-- 已做出的、新会话必须知道的决策 -->
-- 决策 1：[链接到决策归档文件]
+<!-- 必须链接到 docs/superpowers/decisions/ 下的归档文件；若有未归档决策，先用 scripts/archive-decision 留档 -->
+- 决策 1：[链接到决策归档文件 docs/superpowers/decisions/xxx.md]
 - 决策 2：简要描述
 
 ## 已知陷阱

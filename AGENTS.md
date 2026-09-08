@@ -38,7 +38,7 @@ AI 引擎在执行任务时，必须参考以下标准文档以确保工程质�
 ### 上下文管理
 
 - **会话启动**：若存在 handoff，优先阅读 `docs/superpowers/handoffs/` 下最新文档
-- **检查频率**：每完成 3-5 个 subtask 运行 `bash scripts/context-guard.sh`，将结果呈现给 Driver
+- **检查频率**：每完成 3-5 个 subtask 运行 `bash scripts/context-guard.sh --tokens N`（Windows: `.\scripts\context-guard.ps1 --tokens N`），N 为 AI 自报的上下文用量，将结果呈现给 Driver
 - **禁止事项**：
   - ❌ `context-guard` 建议 RESET 时未经 Driver 确认就继续
   - ❌ 同一任务 Reset 超过 3 次不拆分

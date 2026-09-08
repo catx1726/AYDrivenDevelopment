@@ -24,7 +24,7 @@ sequenceDiagram
     AI->>AI: activate_skill writing-plans (生成计划 & 编写 Plan)<br/><i>(AI 暂停，等待 Driver 批准 Plan 位于 docs/superpowers/plans/)</i>
     AI->>AI: activate_skill executing-plans (按 Task 逐步执行计划)<br/><i>(若执行失败，AI 重试/升级给 Driver)</i>
     AI->>AI: activate_skill meta-safe-executor (安全审计)<br/><i>(若检测到风险，AI 报告给 Driver，等待指令)</i>
-    Note over AI: 上下文管理检查<br/><i>AI 每完成 3-5 个 subtask 运行 `bash scripts/context-guard.sh`<br/>若建议非 NONE：执行 Compaction/Offloading/Reset（RESET 需 Driver 确认）</i>
+    AI->>AI: bash scripts/context-guard.sh --tokens N (上下文管理检查)<br/><i>AI 每完成 3-5 个 subtask 运行（Windows 用 .\scripts\context-guard.ps1）<br/>--tokens N 为 AI 自报上下文用量：≥256k→RESET（需 Driver 确认），≥128k→OFFLOADING<br/>若建议非 NONE：先用 archive-decision 归档未留档决策，再执行 Compaction/Offloading/Reset</i>
 
     Note over AI, D: 7-9. 质量与验证 (Test & Verify)
     AI->>AI: activate_skill test-driven-development (TDD 循环)<br/><i>(遇歧义时，AI 进入"等待 Driver 问询/澄清"状态)</i>

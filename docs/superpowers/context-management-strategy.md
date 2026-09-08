@@ -36,6 +36,7 @@ Compaction        Offloading         Reset
 
 **必须立即执行上下文管理的信号（满足任一）：**
 
+- [ ] 上下文用量超过 **256k tokens**（AI coding 超过 256k 上下文易发散，立即 Reset，需 Driver 确认）
 - [ ] 连续执行时间超过 **60 分钟**
 - [ ] 修改/读取文件超过 **25 个**
 - [ ] AI 开始重复之前已完成的分析（"让我再检查一下..."但结论相同）
@@ -45,8 +46,12 @@ Compaction        Offloading         Reset
 
 **建议执行上下文管理的信号：**
 
+- [ ] 上下文用量超过 **128k tokens**（对应 `context-guard --tokens` 的 OFFLOADING 建议）
 - [ ] 执行时间超过 **30 分钟**
 - [ ] 已生成超过 **3 份 handoff/调研文档**
+
+> token 用量由 AI 调用 `scripts/context-guard.sh --tokens N`（或 `.ps1`）时自我报告，
+> 是最直接的上下文健康信号，判断优先级高于时间/文件数等代理指标。
 
 ## 4. Compaction 策略
 
@@ -149,6 +154,23 @@ docs/superpowers/decisions/<yyyy-mm-dd>-<brief-title>.md
 - **中间决策留档**：发生在执行阶段，**即时**、**轻量**
 - **meta-distiller**：发生在任务尾部，**全面**、**系统**
 - meta-distiller 应该**引用**中间决策留档，而不是重复记录
+
+### 6.5 与 handoff 的关系（不可替代）
+
+decision 与 handoff 定位不同，**不可互相替代**：
+
+| 维度 | decision 归档 | handoff 文档 |
+|------|--------------|--------------|
+| 生成时机 | 决策**产生时**立即留档（高频、即时） | **Reset/会话结束**时生成（低频） |
+| 生命周期 | 持久追溯资产 | 时效性状态快照（INDEX 只保留最近 20 份） |
+| 读者 | 未来的人、后续任务（"当初为何选 X 不选 Y"） | 接续的新会话 |
+| 载体 | `docs/superpowers/decisions/` | `docs/superpowers/handoffs/` |
+
+两者是**引用关系**：handoff 的「关键决策」章节必须链接到 decision 归档文件；
+`context-guard` 建议非 NONE 时，会提示先用 `scripts/archive-decision` 归档未留档决策。
+
+若用 handoff 替代 decision：未触发 Reset 的会话将失去即时留档载体，中间决策照样腐烂；
+且决策会随 handoff 快照过时、被 INDEX 淘汰，无法长期追溯。
 
 ---
 
