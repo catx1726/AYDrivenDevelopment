@@ -1,14 +1,13 @@
 ---
-handoff_id: generator-evaluator-research-2026-05-28
+title: Generator/Evaluator 分离深度调研
 author: AI Assistant
 created: 2026-05-28
-status: active
-parent_handoff: harness-engineering-research-2026-05-27
+archived_from: docs/superpowers/handoffs/generator-evaluator-research-2026-05-28.md
 research_question:
   - verification-before-completion 如何升级为 sub-agent 模式
   - 为什么 superpowers upstream 没有将其做成 sub-agent 模式
 dependencies:
-  - docs/superpowers/handoffs/harness-engineering-research-2026-05-27.md
+  - docs/superpowers/research/harness-engineering-research-2026-05-27.md
   - docs/superpowers/lifecycle.md
 sources:
   - obra/superpowers (upstream)

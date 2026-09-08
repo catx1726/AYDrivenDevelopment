@@ -1,24 +1,11 @@
 ---
-handoff_id: harness-engineering-research-2026-05-27
+title: Harness Engineering 调研与项目反思
 author: AI Assistant
 created: 2026-05-27
-status: active
-next_actions:
-  - priority: 1
-    task: AGENTS.md 内容精简（< 80 行地图化）
-    est_effort: 2h
-  - priority: 2
-    task: Local Hooks 层（pre-commit / lefthook）
-    est_effort: 1d
-  - priority: 3
-    task: Worktree 自动化脚本（scripts/worktree-manager）
-    est_effort: 0.5d
-  - priority: 4
-    task: Generator/Evaluator 分离（从 code-review subagent 开始）
-    est_effort: 1-2d
+archived_from: docs/superpowers/handoffs/harness-engineering-research-2026-05-27.md
 ---
 
-# Harness Engineering 调研与项目反思 —— 上下文交接文档
+# Harness Engineering 调研与项目反思 —— 设计依据存档
 
 ## 1. 本次调研目标
 

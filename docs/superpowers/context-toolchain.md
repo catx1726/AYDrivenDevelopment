@@ -70,7 +70,7 @@
 
 | 文件 | 任务 | 状态 | 时间 |
 |------|------|------|------|
-| [generator-evaluator-...](generator-evaluator-research-2026-05-28.md) | 运行时验证调研 | completed | 2026-05-28 |
+| [<task-id>-<timestamp>.md](<task-id>-<timestamp>.md) | <一句话摘要> | in_progress | 2026-05-28 |
 ```
 
 ---

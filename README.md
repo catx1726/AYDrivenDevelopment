@@ -107,7 +107,7 @@ AI 遵循 Superpowers 技能系统：`brainstorming` → `writing-plans` → `ex
 │   └── superpowers/
 │       ├── lifecycle.md        # SSOT：唯一完整生命周期
 │       ├── tips.md             # SSOT：人类操作提示
-│       └── handoffs/           # AI 跨会话上下文交接
+│       └── research/           # 设计依据调研存档（运行时容器归子库，见 child-repo-guide.md）
 ├── skills/                     # 技能系统主目录（平台无关）
 │   ├── meta/                   # 核心元技能
 │   └── custom/                 # 自定义技能
@@ -138,7 +138,7 @@ AI 遵循 Superpowers 技能系统：`brainstorming` → `writing-plans` → `ex
 | `docs/superpowers/child-repo-guide.md` | 人类 + AI | **子库（字库）接入指南**：母库引用模式、资产分类与复制清单 |
 | `docs/superpowers/tips.md`      | 人类      | Issue/PR/Worktree 命令操作提示                                |
 | `docs/standards/`               | 人类 + AI | 工程标准实体。完整索引（领域、路径、适用阶段）见 `AGENTS.md`  |
-| `docs/superpowers/handoffs/`    | AI        | 跨会话上下文交接文档                                          |
+| `docs/superpowers/research/`   | 人类 + AI | 模板设计依据调研存档（Harness Engineering、Generator/Evaluator） |
 | `skills/`                       | AI        | 技能系统。可用技能清单见 `skills/meta/project-entry/SKILL.md` |
 | `scripts/`                      | 人类 + AI | 开发工具脚本，详见「Scripts 速查」                            |
 
