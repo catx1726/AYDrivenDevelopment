@@ -181,7 +181,7 @@ New-Item -ItemType Directory -Force -Path "docs\playbooks", ".project\distill_st
 | Java 项目（Maven/Gradle） | 测试命令用 `mvn test` / `gradle test`，构建用 `mvn package` / `gradle build`；JDK 需自行安装（本模板不检测）；PR 模板中的构建/测试命令已泛化为多栈示例；code-standards 可保留（原则通用）或替换为团队 Java 规范；`.gitignore` 的 Eclipse 规则会忽略 `.project`——加 `!/.project/` 反向排除 |
 | 默认分支是 master 而非 main | 已兼容：CI workflows 不再硬编码 main（diff 基准用 `github.base_ref`，CHANGELOG 推送用仓库默认分支，触发器不限目标分支） |
 | ai_review 报标准文档读取失败 | 已降级兼容：子库未复制 `docs/standards/review-standards/` 时自动使用内置精简清单；如需完整审查尺度，把该目录加入复制清单 |
-| AI 审查想换供应商（非 DeepSeek） | 配 repo variables `AI_BASE_URL` / `AI_MODEL` + secret `AI_API_KEY`（任意 OpenAI 兼容端点；不配则默认 DeepSeek + `DEEPSEEK_API_KEY`） |
+| AI 审查想换供应商（非 DeepSeek） | 零代码改动，只配仓库级变量（任意 OpenAI 兼容端点）。以智谱为例：Secrets 加 `AI_API_KEY`；Settings → Secrets → Variables 加 `AI_BASE_URL=https://open.bigmodel.cn/api/paas/v4`、`AI_MODEL=glm-4.6`（按需选型）。不配置则默认 DeepSeek + `DEEPSEEK_API_KEY` |
 
 ## 7. 反馈回路（模板复利）
 
