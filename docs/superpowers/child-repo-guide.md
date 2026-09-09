@@ -100,7 +100,10 @@ New-Item -ItemType Directory -Force -Path "docs\playbooks", ".project\distill_st
 .\scripts\setup-dev.ps1      # Windows PowerShell
 ```
 
-（要求子库机器已安装 Node.js；`lefthook.yml` 与 `scripts/` 必须先就位。）
+（要求子库机器已安装 Node.js 与 GitHub CLI 并完成 `gh auth login`（见 tips.md「前提」）；`lefthook.yml` 与 `scripts/` 必须先就位。python3 为可选项，仅影响 context-guard 的耗时统计。）
+
+> 可选：在子库 GitHub 仓库 Settings → Secrets 配置 `DEEPSEEK_API_KEY`，
+> 否则复制的 `ai_review` workflow（AI 代码审查）不可用，其余 CI 不受影响。
 
 ### Step 5: 验证清单
 

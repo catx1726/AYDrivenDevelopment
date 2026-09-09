@@ -1,5 +1,31 @@
 # Issue / PR 最佳实践
 
+## 前提：环境依赖清单
+
+| 依赖 | 用途 | 必要性 | 安装/配置 |
+|------|------|--------|----------|
+| git（Windows 需 Git for Windows） | 基础 + `.sh` 钩子的 bash 来源 | 必须 | 自带/官网安装 |
+| Node.js | `setup-dev` 安装 lefthook、markdownlint 钩子 | 必须 | https://nodejs.org |
+| GitHub CLI（`gh`） | 生命周期 Issue/PR 环节 | 必须（Issue/PR 流程） | 见下方安装 |
+| python3 | `context-guard.sh` 的会话耗时计算 | 可选（缺失时 elapsed 显示 unknown，token 检测不受影响） | 系统包管理器 |
+| `DEEPSEEK_API_KEY`（repo secrets） | `ai_review` CI 的 AI 代码审查 | 可选（不配置则该 workflow 不可用，其余 CI 不受影响） | 仓库 Settings → Secrets |
+
+GitHub CLI 安装与认证：
+
+```bash
+# 安装（按平台选一）
+winget install GitHub.cli          # Windows（或 scoop install gh）
+brew install gh                    # macOS
+sudo apt install gh                # Debian/Ubuntu（WSL 同）
+# sudo dnf install gh              # Fedora
+
+gh auth login                      # 认证（浏览器流程）
+gh auth status                     # 验证：显示已登录账号即就绪
+```
+
+未安装或未认证时，`gh issue create` 等命令会直接失败——应先检查此前提，而不是当作流程故障。
+`setup-dev` 会对 gh 与 python3 做 warning 级检查。
+
 ## Windows 环境注意事项
 
 ### gh issue create 必须使用 `--body-file`

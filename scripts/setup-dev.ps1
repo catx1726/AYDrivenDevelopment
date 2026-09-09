@@ -1,4 +1,4 @@
-# 开发环境一键安装脚本 (PowerShell)
+﻿# 开发环境一键安装脚本 (PowerShell)
 # - 安装 lefthook
 # - 注册 Git hooks
 # - 验证安装结果
@@ -37,6 +37,25 @@ echo "🧪 Running quick validation..."
 bash scripts/check-agents-md.sh 2>$null
 if ($LASTEXITCODE -ne 0) {
     powershell -File scripts/check-agents-md.ps1
+}
+
+# 5. Check GitHub CLI (warning only - required for Issue/PR lifecycle, not for hooks)
+if (Get-Command gh -ErrorAction SilentlyContinue) {
+    gh auth status 2>$null | Out-Null
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "   ✅ GitHub CLI installed and authenticated"
+    } else {
+        Write-Host "   ⚠️ GitHub CLI installed but NOT authenticated. Run: gh auth login"
+    }
+} else {
+    Write-Host "   ⚠️ GitHub CLI not found. Issue/PR lifecycle requires it. Install: https://cli.github.com"
+}
+
+# 6. Check python3 (warning only - optional, used by context-guard.sh elapsed calculation)
+if (Get-Command python3 -ErrorAction SilentlyContinue) {
+    Write-Host "   ✅ python3 found (context-guard elapsed calculation available)"
+} else {
+    Write-Host "   ⚠️ python3 not found. context-guard elapsed will show 'unknown' (token detection unaffected)."
 }
 
 Write-Host ""
