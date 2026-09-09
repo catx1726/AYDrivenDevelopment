@@ -58,6 +58,9 @@ gh auth status                     # 验证：显示已登录账号即就绪
   钩子全部失效——安装 Git for Windows 并确保 Git Bash 在 PATH，或在 lefthook.yml 中写 Git Bash 绝对路径
   （`setup-dev.ps1` 会检测并警告）
 - **`gh ssh-key add`**：需要 `admin:public_key` scope，缺失时先 `gh auth refresh -s admin:public_key`
+- **PowerShell 执行策略**：Windows 默认 Restricted 会拦截 `.\scripts\*.ps1`（报"禁止运行脚本"）。
+  Driver 手动执行一次 `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`，
+  或单次绕过 `powershell -ExecutionPolicy Bypass -File <脚本>`
 
 ### gh issue create 必须使用 `--body-file`
 

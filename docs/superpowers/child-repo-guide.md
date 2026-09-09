@@ -45,6 +45,11 @@
 
 以下命令中 `<SOP-HOME>` 替换为母库本地实际路径。
 
+> **人机分工**：复制文件、创建骨架、编写 AGENTS.md 可由 AI 或人执行；
+> **必须 Driver 手动**的操作（交互式/浏览器/系统级）：安装 git/Node.js/GitHub CLI、
+> `gh auth login`、安装 Superpowers 插件、放宽 PowerShell 执行策略、配置仓库 Secrets/Variables。
+> AI 遇到这些步骤应明确转交 Driver，不要尝试代办。
+
 ### Step 0: 运行前置自检（每次会话开始时也可复跑）
 
 ```bash
@@ -115,12 +120,16 @@ New-Item -ItemType Directory -Force -Path "docs\playbooks", ".project\distill_st
 
 ```powershell
 .\scripts\setup-dev.ps1      # Windows PowerShell
+# 若报"禁止运行脚本"（默认 ExecutionPolicy Restricted），Driver 手动执行一次：
+#   Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+# 或单次绕过：powershell -ExecutionPolicy Bypass -File .\scripts\setup-dev.ps1
 ```
 
 （要求子库机器已安装 Node.js 与 GitHub CLI 并完成 `gh auth login`（见 tips.md「前提」）；`lefthook.yml` 与 `scripts/` 必须先就位。python3 为可选项，仅影响 context-guard 的耗时统计。）
 
-> 可选：在子库 GitHub 仓库 Settings → Secrets 配置 `DEEPSEEK_API_KEY`，
-> 否则复制的 `ai_review` workflow（AI 代码审查）不可用，其余 CI 不受影响。
+> 可选：配置 AI 代码审查（ai_review CI）——三个仓库级变量 `AI_API_KEY` / `AI_BASE_URL` / `AI_MODEL`
+> （供应商任意 OpenAI 兼容端点，含智谱示例），配置方法见 tips.md「AI 审查供应商配置」。
+> 不配置则 ai_review 不可用，其余 CI 不受影响。
 
 ### Step 5: 验证清单
 
@@ -192,5 +201,7 @@ New-Item -ItemType Directory -Force -Path "docs\playbooks", ".project\distill_st
 ```bash
 gh issue create --repo <母库仓库> --title "adoption: <一句话摩擦点>" --body-file feedback.md
 ```
+
+母库仓库默认为 `catx1726/AYDrivenDevelopment`（使用 fork 时请替换为自己的仓库）。
 
 使用者获得工程复利，母库获得进化复利——这是模板设计的一部分，不是可选的客套。

@@ -40,7 +40,7 @@ if command -v gh >/dev/null 2>&1; then
   if gh auth status >/dev/null 2>&1; then
     echo "  ✅ gh 已认证"
   else
-    echo "  ❌ gh 未认证: 运行 gh auth login（token 需 repo 权限）"
+    echo "  ❌ gh 未认证: 需 Driver 在终端手动执行 gh auth login（浏览器交互式，AI 不可代办）"
     MISSING_TOOLS=2
   fi
 else

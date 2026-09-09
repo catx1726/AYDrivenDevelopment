@@ -38,8 +38,8 @@ AI 引擎在执行任务时，必须参考以下标准文档以确保工程质�
 ### 子库接入门禁
 
 - **适用**：工作目录非本仓库（子库会话）时，**必须先自检再执行任何生命周期步骤**
-- **第一步**：运行 `bash <SOP-HOME>/scripts/check-adoption.sh`（Windows: `.ps1`）
-- **未就绪**：按 `docs/superpowers/child-repo-guide.md` §3 完成接入（资产复制 + 工具安装认证 + superpowers 插件），禁止直接进入 brainstorming
+- **第一步**：运行 `bash <SOP-HOME>/scripts/check-adoption.sh`（Windows: `.ps1`）；SOP-HOME 取自子库 AGENTS.md，未填写则询问 Driver
+- **未就绪**：按 `docs/superpowers/child-repo-guide.md` §3 完成接入（交互式操作如 `gh auth login`、插件安装必须由 Driver 手动执行），禁止直接进入 brainstorming
 - **就绪**：正常执行生命周期，运行时产物写当前子库
 
 ### 上下文管理

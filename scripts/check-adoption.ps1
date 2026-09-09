@@ -42,7 +42,7 @@ if (Get-Command gh -ErrorAction SilentlyContinue) {
     if ($LASTEXITCODE -eq 0) {
         Write-Host "  ✅ gh 已认证"
     } else {
-        Write-Host "  ❌ gh 未认证: 运行 gh auth login（token 需 repo 权限）"
+        Write-Host "  ❌ gh 未认证: 需 Driver 在终端手动执行 gh auth login（浏览器交互式，AI 不可代办）"
         $MISSING_TOOLS = 2
     }
 } else {
