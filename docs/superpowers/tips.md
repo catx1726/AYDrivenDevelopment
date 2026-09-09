@@ -33,6 +33,19 @@ gh auth status                     # 验证：显示已登录账号即就绪
 
 ## Windows 环境注意事项
 
+### 红线：禁止用 PowerShell 5.1 文本管道编辑仓库文件
+
+`Get-Content | Set-Content` 会破坏 BOM-less UTF-8：中文注释乱码、吞掉字符串闭合引号
+（本地无感知，CI bash 直接语法错误）。改用编辑器、`sed` 或 `gh --body-file`。
+
+相关提示：
+
+- **控制台中文乱码**：GBK 代码页下显示乱码 ≠ 文件损坏，先 `chcp 65001` 再看，勿误判后"修复"文件
+- **bash 解析到 WSL stub**：若 `bash` 指向 `C:\Windows\System32\bash.exe`（WSL 未装发行版），
+  钩子全部失效——安装 Git for Windows 并确保 Git Bash 在 PATH，或在 lefthook.yml 中写 Git Bash 绝对路径
+  （`setup-dev.ps1` 会检测并警告）
+- **`gh ssh-key add`**：需要 `admin:public_key` scope，缺失时先 `gh auth refresh -s admin:public_key`
+
 ### gh issue create 必须使用 `--body-file`
 
 **⚠️ 原因**：Windows 下 `--body "文本"` 会导致 Markdown 内容丢失。

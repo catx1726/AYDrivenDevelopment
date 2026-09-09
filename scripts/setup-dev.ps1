@@ -58,6 +58,22 @@ if (Get-Command python3 -ErrorAction SilentlyContinue) {
     Write-Host "   ⚠️ python3 not found. context-guard elapsed will show 'unknown' (token detection unaffected)."
 }
 
+# 7. Check bash resolution (hooks invoke `bash scripts/...`; Windows may resolve to WSL stub)
+if (Get-Command bash -ErrorAction SilentlyContinue) {
+    $bashPath = (Get-Command bash).Source
+    if ($bashPath -like "*System32*") {
+        Write-Host "   ⚠️ bash resolves to WSL stub: $bashPath"
+        Write-Host "      Hooks will FAIL. Install Git for Windows and ensure Git Bash is in PATH,"
+        Write-Host "      or edit lefthook.yml to use Git Bash absolute path (e.g. C:\Program Files\Git\bin\bash.exe)"
+        $gitBash = "C:\Program Files\Git\bin\bash.exe"
+        if (Test-Path $gitBash) { Write-Host "      Detected Git Bash at: $gitBash" }
+    } else {
+        Write-Host "   ✅ bash OK: $bashPath"
+    }
+} else {
+    Write-Host "   ⚠️ bash not found in PATH. Hooks require Git Bash (Git for Windows)."
+}
+
 Write-Host ""
 Write-Host "✅ Setup complete! Your commits are now guarded by:"
 Write-Host "   • AGENTS.md size check (≤ 100 lines)"

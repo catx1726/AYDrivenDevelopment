@@ -23,6 +23,14 @@ if ((Test-Path AGENTS.md) -and (Select-String -Path AGENTS.md -Pattern 'SOP-HOME
     Write-Host "  ❌ AGENTS.md 桥接缺失（用 child-repo-guide.md §4 模板创建）"
     $MISSING_ASSETS = 1
 }
+# .gitignore 冲突检测（Eclipse 规则忽略 .project 会静默断掉审计链）
+if (Test-Path .gitignore) {
+    git check-ignore -q .project 2>$null
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "  ⚠️ .project/ 被 .gitignore 忽略（Eclipse 规则冲突）——审计日志无法入库，钩子将持续失败"
+        Write-Host "     修复：在 .gitignore 中追加一行  !/.project/"
+    }
+}
 
 Write-Host ""
 Write-Host "[2/3] 工具链"

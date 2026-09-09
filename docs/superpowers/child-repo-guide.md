@@ -97,7 +97,10 @@ New-Item -ItemType Directory -Force -Path "docs\playbooks", ".project\distill_st
 - `docs/superpowers/decisions/INDEX.md`：内容一行 `# Decision 索引`
 - `.project/ops_changelog.md`：复制 `<SOP-HOME>/.project/ops_changelog.md` 的**表头**（前 4 行）作为初始审计日志
 
-可选：复制 `<SOP-HOME>/docs/playbooks/README.md`（归档框架说明）与 `CHANGELOG.md`（CI `close_loop` 会向其追加）。
+**必做**：复制 `CHANGELOG.md`（PR 合并后 `close_loop` 向其追加；即使忘记复制，CI 也会自动初始化兜底，
+但建议复制以获得既有格式）。同时检查 `.gitignore`：若为 Eclipse 惯例忽略了 `.project`
+（Java 项目常见），必须追加反向排除 `!/.project/`，否则审计日志永远无法入库、审计钩子持续失败
+（`check-adoption` 会自动检测此冲突）。
 
 ### Step 3: 创建子库 AGENTS.md
 
@@ -175,7 +178,10 @@ New-Item -ItemType Directory -Force -Path "docs\playbooks", ".project\distill_st
 | `check-ops-changelog` 拦截提交 | 子库 `.project/ops_changelog.md` 未随代码变更更新（Step 2 骨架缺失也会导致） |
 | 子库与母库 AGENTS.md 同时存在，AI 读哪个 | 先读子库（CLI 自动发现），子库负责指引去母库——这正是 §4 模板的桥接作用 |
 | 后端/移动端等非 JS 技术栈 | 核心流程、钩子与 CI 均为仓库级检查，语言无关可直接使用；标准文档示例以 JS 生态为主（clean-code-javascript），原则通用、示例按技术栈类比；测试/构建命令按子库技术栈替换（模板中的 npm 示例仅示意） |
-| Java 项目（Maven/Gradle） | 测试命令用 `mvn test` / `gradle test`，构建用 `mvn package` / `gradle build`；JDK 需自行安装（本模板不检测）；PR 模板中的构建/测试命令已泛化为多栈示例；code-standards 可保留（原则通用）或替换为团队 Java 规范 |
+| Java 项目（Maven/Gradle） | 测试命令用 `mvn test` / `gradle test`，构建用 `mvn package` / `gradle build`；JDK 需自行安装（本模板不检测）；PR 模板中的构建/测试命令已泛化为多栈示例；code-standards 可保留（原则通用）或替换为团队 Java 规范；`.gitignore` 的 Eclipse 规则会忽略 `.project`——加 `!/.project/` 反向排除 |
+| 默认分支是 master 而非 main | 已兼容：CI workflows 不再硬编码 main（diff 基准用 `github.base_ref`，CHANGELOG 推送用仓库默认分支，触发器不限目标分支） |
+| ai_review 报标准文档读取失败 | 已降级兼容：子库未复制 `docs/standards/review-standards/` 时自动使用内置精简清单；如需完整审查尺度，把该目录加入复制清单 |
+| AI 审查想换供应商（非 DeepSeek） | 配 repo variables `AI_BASE_URL` / `AI_MODEL` + secret `AI_API_KEY`（任意 OpenAI 兼容端点；不配则默认 DeepSeek + `DEEPSEEK_API_KEY`） |
 
 ## 7. 反馈回路（模板复利）
 

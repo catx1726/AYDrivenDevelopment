@@ -1,4 +1,4 @@
-# 在 diff 中检测破坏性命令或危险模式
+﻿# 在 diff 中检测破坏性命令或危险模式
 # 用于 pre-commit hook 和 Agent 执行前检查
 # 注意：只检查实际代码文件，忽略 Markdown 文档中的示例
 
@@ -15,8 +15,8 @@ $DangerousPatterns = @(
 
 $Found = 0
 
-# 获取暂存区中的非文档文件
-$StagedFiles = git diff --cached --name-only --diff-filter=ACM | Select-String -NotMatch '\.(md|markdown)$'
+# 获取暂存区中的非文档文件（排除 scripts/：守卫自身文件天然含模式字符串，避免首次接入复制时自引用误拦）
+$StagedFiles = git diff --cached --name-only --diff-filter=ACM | Select-String -NotMatch '\.(md|markdown)$|^scripts/'
 
 if (-not $StagedFiles) {
     exit 0
@@ -24,7 +24,7 @@ if (-not $StagedFiles) {
 
 # 只在代码文件中检测危险模式
 foreach ($pattern in $DangerousPatterns) {
-    $Match = git diff --cached -G"$pattern" --name-only --diff-filter=ACM | Select-String -NotMatch '\.(md|markdown)$'
+    $Match = git diff --cached -G"$pattern" --name-only --diff-filter=ACM | Select-String -NotMatch '\.(md|markdown)$|^scripts/'
     if ($Match) {
         Write-Host "⚠️  Potential destructive pattern detected: '$pattern'"
         Write-Host "   Files: $Match"

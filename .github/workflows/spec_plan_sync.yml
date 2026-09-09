@@ -3,7 +3,7 @@ name: Spec-Plan Sync Check
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches: [main]
+    # 不限制目标分支：兼容默认分支为 master/main 的子库
 
 jobs:
   check-docs-sync:

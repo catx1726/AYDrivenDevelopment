@@ -3,7 +3,7 @@ name: Issue Knowledge Closure
 on:
   pull_request:
     types: [closed]
-    branches: [main]
+    # 不限制目标分支：兼容默认分支为 master/main 的子库
 
 permissions:
   contents: write
@@ -38,7 +38,7 @@ jobs:
               ### ✅ 任务完成与知识沉淀 (SOP 2.0)
               本项目已成功合并！本次协作产生的智力资产已归档。
 
-              - **📚 技术归档**: [查看 docs/superpowers/ 目录](https://github.com/${context.repo.owner}/${context.repo.repo}/tree/main/${archivePath})
+              - **📚 技术归档**: [查看 docs/superpowers/ 目录](https://github.com/${context.repo.owner}/${context.repo.repo}/tree/${pr.base.ref}/${archivePath})
               - **🛠 核心变更摘要**:
               ${summary}
 
@@ -85,7 +85,10 @@ jobs:
             // 2. 构造 Changelog 条目
             const newEntry = `\n### [${date}] ${prTitle} (#${prNumber})\n${summary}\n`;
 
-            // 3. 读取并更新文件
+            // 3. 读取并更新文件（缺失时自动初始化，避免 ENOENT 中断闭环）
+            if (!fs.existsSync('CHANGELOG.md')) {
+              fs.writeFileSync('CHANGELOG.md', '# Unreleased\n');
+            }
             let content = fs.readFileSync('CHANGELOG.md', 'utf8');
             const unreleasedTag = '# Unreleased';
             
@@ -103,4 +106,4 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add CHANGELOG.md
           git commit -m "docs: auto-update CHANGELOG.md for PR #${{ github.event.pull_request.number }}" || echo "No changes to commit"
-          git push origin main
+          git push origin HEAD:${{ github.event.repository.default_branch }}

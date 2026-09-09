@@ -4,9 +4,10 @@ import subprocess
 import sys
 
 def get_git_diff():
-    # 获取变更统计和内容
-    diff_stat = subprocess.check_output(['git', 'diff', 'origin/main...HEAD', '--stat']).decode('utf-8')
-    diff_content = subprocess.check_output(['git', 'diff', 'origin/main...HEAD']).decode('utf-8')
+    # 基准分支从环境变量读取（CI 注入仓库默认分支），兼容 master/main
+    base = os.getenv('DEFAULT_BRANCH', 'main')
+    diff_stat = subprocess.check_output(['git', 'diff', f'origin/{base}...HEAD', '--stat']).decode('utf-8')
+    diff_content = subprocess.check_output(['git', 'diff', f'origin/{base}...HEAD']).decode('utf-8')
     return diff_stat, diff_content
 
 def review():
@@ -31,15 +32,24 @@ def review():
         print("变更过小，跳过 AI 深度审查。")
         sys.exit(0)
 
-    # 读取标准文档
+    # 读取标准文档（子库可能未复制母库标准文档：缺失时降级为内置精简清单，而非中断）
+    BUILTIN_CHECKLIST = """
+## 内置审查清单（母库标准文档缺失时的降级方案）
+
+1. 逻辑错误 / 边界条件 / 潜在 Bug（Blocking）
+2. 架构与安全缺陷（Blocking）
+3. 可读性与非强制风格建议（前缀 "Nit:"，Non-blocking）
+4. PR 是否关联 Issue（Closes #N）并具备 Spec/Plan 文档
+"""
     try:
         with open('docs/standards/review-standards/review/reviewer/standard.md', 'r', encoding='utf-8') as f:
             standard = f.read()
         with open('docs/standards/review-standards/review/reviewer/looking-for.md', 'r', encoding='utf-8') as f:
             looking_for = f.read()
     except Exception as e:
-        print(f"读取标准文档失败: {e}")
-        sys.exit(1)
+        print(f"⚠️ 读取标准文档失败（{e}），降级为内置精简审查清单")
+        standard = "依据资深工程师通用标准审查。"
+        looking_for = BUILTIN_CHECKLIST
     
     # 构建 Prompt
     prompt = f"""
@@ -71,17 +81,19 @@ def review():
     7. 回复使用 Markdown 格式。
     """
     
-    # 调用 DeepSeek
-    api_key = os.getenv('DEEPSEEK_API_KEY')
+    # 调用 LLM 供应商（OpenAI 兼容端点；默认 DeepSeek，可经 env/repo variables 覆盖）
+    api_key = os.getenv('AI_API_KEY') or os.getenv('DEEPSEEK_API_KEY')
     if not api_key:
-        print("未配置 DEEPSEEK_API_KEY")
+        print("未配置 AI_API_KEY / DEEPSEEK_API_KEY")
         sys.exit(1)
+    base_url = os.getenv('AI_BASE_URL', 'https://api.deepseek.com')
+    model = os.getenv('AI_MODEL', 'deepseek-chat')
 
     response = requests.post(
-        "https://api.deepseek.com/chat/completions",
+        f"{base_url}/chat/completions",
         headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
         json={
-            "model": "deepseek-chat",
+            "model": model,
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.5
         }

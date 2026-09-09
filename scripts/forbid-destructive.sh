@@ -16,8 +16,8 @@ DANGEROUS_PATTERNS=(
 
 FOUND=0
 
-# 获取暂存区中的非文档文件
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -vE '\.(md|markdown)$' || true)
+# 获取暂存区中的非文档文件（排除 scripts/：守卫自身文件天然含模式字符串，避免首次接入复制时自引用误拦）
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -vE '\.(md|markdown)$|^scripts/' || true)
 
 if [ -z "$STAGED_FILES" ]; then
   exit 0
@@ -25,7 +25,7 @@ fi
 
 # 只在代码文件中检测危险模式
 for pattern in "${DANGEROUS_PATTERNS[@]}"; do
-  MATCH=$(git diff --cached -G"$pattern" --name-only --diff-filter=ACM | grep -vE '\.(md|markdown)$' 2>/dev/null || true)
+  MATCH=$(git diff --cached -G"$pattern" --name-only --diff-filter=ACM | grep -vE '\.(md|markdown)$|^scripts/' 2>/dev/null || true)
   if [ -n "$MATCH" ]; then
     echo "⚠️  Potential destructive pattern detected: '$pattern'"
     echo "   Files: $MATCH"

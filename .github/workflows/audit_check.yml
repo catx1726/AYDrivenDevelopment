@@ -12,12 +12,12 @@ jobs:
           fetch-depth: 0
       - name: Verify Audit Log Update
         run: |
-          # 提取除文档和配置外的所有代码变更文件
-          CHANGES=$(git diff --name-only origin/main...HEAD | grep -vE '^(\.github/|README\.md|docs/)' || true)
+          # 提取除文档和配置外的所有代码变更文件（基准分支取 PR 目标分支，兼容 master/main）
+          CHANGES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -vE '^(\.github/|README\.md|docs/)' || true)
 
           if [ -n "$CHANGES" ]; then
             # 如果有代码变更，强制检查 ops_changelog.md 是否在本次提交中
-            LOG_CHANGED=$(git diff --name-only origin/main...HEAD | grep '\.project/ops_changelog\.md')
+            LOG_CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep '\.project/ops_changelog\.md')
 
             if [ -z "$LOG_CHANGED" ]; then
               echo "❌ **物理熔断**: 检测到代码变更，但未在 .project/ops_changelog.md 中提交审计日志！"

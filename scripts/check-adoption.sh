@@ -25,6 +25,11 @@ else
   echo "  ❌ AGENTS.md 桥接缺失（用 child-repo-guide.md §4 模板创建）"
   MISSING_ASSETS=1
 fi
+# .gitignore 冲突检测（Eclipse 规则忽略 .project 会静默断掉审计链）
+if [ -f .gitignore ] && git check-ignore -q .project 2>/dev/null; then
+  echo "  ⚠️ .project/ 被 .gitignore 忽略（Eclipse 规则冲突）——审计日志无法入库，钩子将持续失败"
+  echo "     修复：在 .gitignore 中追加一行  !/.project/"
+fi
 
 echo ""
 echo "[2/3] 工具链"

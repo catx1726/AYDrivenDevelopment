@@ -3,7 +3,7 @@ name: AI Code Review Assistant
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches: [main]
+    # 不限制目标分支：兼容默认分支为 master/main 的子库
 
 permissions:
   contents: read
@@ -28,7 +28,12 @@ jobs:
 
       - name: Run AI Review
         env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          # 兼容默认分支为 master/main 的子库（避免硬编码 origin/main）
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          # 供应商可配置（repo variables 可覆盖），默认 DeepSeek；兼容任意 OpenAI 风格端点
+          AI_API_KEY: ${{ secrets.AI_API_KEY || secrets.DEEPSEEK_API_KEY }}
+          AI_BASE_URL: ${{ vars.AI_BASE_URL || 'https://api.deepseek.com' }}
+          AI_MODEL: ${{ vars.AI_MODEL || 'deepseek-chat' }}
           PR_BODY: ${{ github.event.pull_request.body }}
           BRANCH_NAME: ${{ github.head_ref }}
         run: python scripts/ai_reviewer.py
