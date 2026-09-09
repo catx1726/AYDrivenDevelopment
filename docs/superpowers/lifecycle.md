@@ -56,6 +56,11 @@ sequenceDiagram
         AI->>D: 等待 Driver 审核案例内容
     end
 
+    Note over AI, D: 14.2 母库反馈 (Template Feedback Loop)
+    AI->>AI: 汇总本次接入/使用摩擦点<br/><i>(依赖缺失/文档歧义/流程断点；仅母库引用模式的子库会话)</i>
+    AI->>D: 生成母库反馈 issue 草稿，等待 Driver 确认
+    D->>VCS: gh issue create（提交至母库仓库）<br/><i>(使用者复利，母库进化复利)</i>
+
     Note over AI: 15. 流程反馈与自我反思 (Feedback & Self-Reflection)
     AI->>AI: perform_self_reflection & update_ops_changelog<br/><i>(总结执行情况，记录挑战，为智力演进提供输入)</i>
     end
@@ -72,3 +77,4 @@ sequenceDiagram
 | 13.1 | 审查回复同步 | `REVIEW_REPLY_TEMPLATE` | PR 评论 |
 | 14 | 反馈与反思 | `perform_self_reflection` | ops_changelog 更新 |
 | 14.1 | 棘手问题归档 | `docs/playbooks/README.md` | Debugging Recipe |
+| 14.2 | 母库反馈（子库会话） | `child-repo-guide.md` §7 | 母库反馈 issue 草稿 |

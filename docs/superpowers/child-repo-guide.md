@@ -45,6 +45,20 @@
 
 以下命令中 `<SOP-HOME>` 替换为母库本地实际路径。
 
+### Step 0: 运行前置自检（每次会话开始时也可复跑）
+
+```bash
+bash <SOP-HOME>/scripts/check-adoption.sh       # macOS / Linux / WSL / Git Bash
+```
+
+```powershell
+& "<SOP-HOME>\scripts\check-adoption.ps1"       # Windows PowerShell
+```
+
+自检覆盖：接入资产（scripts/hooks/CI/运行时目录/AGENTS.md 桥接）、工具链
+（git/Node.js/gh+认证/python3 可选）、AI 端提示（superpowers 插件）。
+**未就绪时禁止直接进入 brainstorming 等生命周期步骤**——先完成以下 Step 1-4 再复跑至就绪。
+
 ### Step 1: 复制安装件到子库根
 
 ```bash
@@ -161,3 +175,16 @@ New-Item -ItemType Directory -Force -Path "docs\playbooks", ".project\distill_st
 | `check-ops-changelog` 拦截提交 | 子库 `.project/ops_changelog.md` 未随代码变更更新（Step 2 骨架缺失也会导致） |
 | 子库与母库 AGENTS.md 同时存在，AI 读哪个 | 先读子库（CLI 自动发现），子库负责指引去母库——这正是 §4 模板的桥接作用 |
 | 后端/移动端等非 JS 技术栈 | 核心流程、钩子与 CI 均为仓库级检查，语言无关可直接使用；标准文档示例以 JS 生态为主（clean-code-javascript），原则通用、示例按技术栈类比；测试/构建命令按子库技术栈替换（模板中的 npm 示例仅示意） |
+| Java 项目（Maven/Gradle） | 测试命令用 `mvn test` / `gradle test`，构建用 `mvn package` / `gradle build`；JDK 需自行安装（本模板不检测）；PR 模板中的构建/测试命令已泛化为多栈示例；code-standards 可保留（原则通用）或替换为团队 Java 规范 |
+
+## 7. 反馈回路（模板复利）
+
+接入与使用中发现的摩擦（依赖缺失、文档歧义、流程断点、其他技术栈适配问题）
+是母库进化的输入。任务闭环后（对应 lifecycle 14.2），AI 汇总本次摩擦点生成
+母库反馈 issue 草稿，Driver 确认后提交：
+
+```bash
+gh issue create --repo <母库仓库> --title "adoption: <一句话摩擦点>" --body-file feedback.md
+```
+
+使用者获得工程复利，母库获得进化复利——这是模板设计的一部分，不是可选的客套。

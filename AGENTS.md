@@ -35,6 +35,13 @@ AI 引擎在执行任务时，必须参考以下标准文档以确保工程质�
 
 **升级条件**：`executing-plans` 连续失败 3 次以上 / `meta-safe-executor` 检测到高风险 / TDD 歧义阻塞 / 资源不足。详见 `docs/superpowers/lifecycle.md`。
 
+### 子库接入门禁
+
+- **适用**：工作目录非本仓库（子库会话）时，**必须先自检再执行任何生命周期步骤**
+- **第一步**：运行 `bash <SOP-HOME>/scripts/check-adoption.sh`（Windows: `.ps1`）
+- **未就绪**：按 `docs/superpowers/child-repo-guide.md` §3 完成接入（资产复制 + 工具安装认证 + superpowers 插件），禁止直接进入 brainstorming
+- **就绪**：正常执行生命周期，运行时产物写当前子库
+
 ### 上下文管理
 
 - **会话启动**：若存在 handoff，优先阅读 `docs/superpowers/handoffs/` 下最新文档
