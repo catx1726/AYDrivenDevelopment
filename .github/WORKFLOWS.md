@@ -284,7 +284,7 @@ PR 描述中没有包含正确的关键词（`Closes #N`、`Fixes #N`、`Resolve
 
 ### 计划中的优化（Phase 2）
 
-- [ ] 添加 `npm test` 到 CI 流程（强制测试通过）
+- [ ] 添加项目测试命令（`npm test` / `go test` 等）到 CI 流程（强制测试通过）
 - [ ] 对于 Feature PR，强制检查 Spec/Plan 文档
 - [ ] 添加备份 CODEOWNERS（避免单点瓶颈）
 - [ ] 合并重复的 workflows 减少计算资源

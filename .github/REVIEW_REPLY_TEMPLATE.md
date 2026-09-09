@@ -35,7 +35,7 @@
 ### 验证结果
 
 - [ ] 单元测试：`X/Y` 通过
-- [ ] 构建：`npm run build` / `pnpm build` 通过
+- [ ] 构建：项目构建命令（`npm run build` / `go build` 等）通过
 - [ ] 手动测试：<!-- 截图/录屏/关键日志 -->
 - [ ] 其他：<!-- lint / type-check / e2e -->
 

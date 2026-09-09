@@ -160,3 +160,4 @@ New-Item -ItemType Directory -Force -Path "docs\playbooks", ".project\distill_st
 | 子库 CI 报 `scripts/ai_reviewer.py` 缺失 | Step 1 未执行或 `.github/`、`scripts/` 未提交到子库 |
 | `check-ops-changelog` 拦截提交 | 子库 `.project/ops_changelog.md` 未随代码变更更新（Step 2 骨架缺失也会导致） |
 | 子库与母库 AGENTS.md 同时存在，AI 读哪个 | 先读子库（CLI 自动发现），子库负责指引去母库——这正是 §4 模板的桥接作用 |
+| 后端/移动端等非 JS 技术栈 | 核心流程、钩子与 CI 均为仓库级检查，语言无关可直接使用；标准文档示例以 JS 生态为主（clean-code-javascript），原则通用、示例按技术栈类比；测试/构建命令按子库技术栈替换（模板中的 npm 示例仅示意） |

@@ -28,7 +28,7 @@ sequenceDiagram
 
     Note over AI, D: 7-9. 质量与验证 (Test & Verify)
     AI->>AI: activate_skill test-driven-development (TDD 循环)<br/><i>(遇歧义时，AI 进入"等待 Driver 问询/澄清"状态)</i>
-    AI->>AI: 语法检查 (node --check) + 冒烟测试<br/><i>(Layer 1: CI/Hook + Layer 2: Generator 自检)</i>
+    AI->>AI: 语法检查 (按项目技术栈) + 冒烟测试<br/><i>(Layer 1: CI/Hook + Layer 2: Generator 自检)</i>
     AI->>AI: activate_skill verification-before-completion (计算型验证)<br/><i>(运行测试命令，检查 exit code)</i>
     AI->>AI: activate_skill meta-runtime-evaluator (推理型验证)<br/><i>(Layer 3: 独立 Evaluator 验证运行时行为，可选触发)</i>
 
