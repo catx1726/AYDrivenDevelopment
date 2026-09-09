@@ -9,7 +9,7 @@
 | GitHub CLI（`gh`） | 生命周期 Issue/PR 环节 | 必须（Issue/PR 流程） | 见下方安装 |
 | **Superpowers 插件** | 生命周期技能（brainstorming/writing-plans/TDD 等）由 AI CLI 插件提供，**不是母库内置功能** | 必须（完整生命周期） | 按 AI 平台安装，见 human-guide.md §6 |
 | python3 | `context-guard.sh` 的会话耗时计算 | 可选（缺失时 elapsed 显示 unknown，token 检测不受影响） | 系统包管理器 |
-| `DEEPSEEK_API_KEY`（repo secrets） | `ai_review` CI 的 AI 代码审查 | 可选（不配置则该 workflow 不可用，其余 CI 不受影响） | 仓库 Settings → Secrets |
+| AI 审查凭据（repo secrets/variables） | `ai_review` CI 的 AI 代码审查，供应商可配置 | 可选（不配置则该 workflow 不可用，其余 CI 不受影响） | 见下方「AI 审查供应商配置」 |
 
 GitHub CLI 安装与认证：
 
@@ -30,6 +30,19 @@ gh auth status                     # 验证：显示已登录账号即就绪
 > 未安装或未认证时，`gh` 命令直接失败——应先检查此前提，而不是当作流程故障。
 
 一键自检：`bash <SOP-HOME>/scripts/check-adoption.sh`（或 `.ps1`）会检测以上依赖与接入资产。
+
+### AI 审查供应商配置（ai_review CI）
+
+三个仓库级变量，任意 OpenAI 兼容端点即可（以智谱 GLM 为例）：
+
+| 变量 | 配置位置 | 智谱示例值 | 不配置时的默认 |
+|------|---------|-----------|---------------|
+| `AI_API_KEY` | Settings → Secrets and variables → Actions → **Secrets** 标签 | 你的智谱 API Key | 兼容读取旧名 `DEEPSEEK_API_KEY`；都没有则 ai_review 跳过 |
+| `AI_BASE_URL` | 同上 → **Variables** 标签 | `https://open.bigmodel.cn/api/paas/v4` | `https://api.deepseek.com` |
+| `AI_MODEL` | 同上 → **Variables** 标签 | `glm-4.6`（按需选型） | `deepseek-chat` |
+
+> Secrets 与 Variables 在同一设置页的两个标签：**Secrets** 存凭据（日志中打码），
+> **Variables** 存非敏感配置。配错标签是常见失误。
 
 ## Windows 环境注意事项
 

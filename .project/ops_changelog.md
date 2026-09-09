@@ -72,4 +72,6 @@
 
 | 2026-09-09T14:10+08:00 | update | .gitignore | 追加 Python 字节码排除（__pycache__/），并从提交中移除误入库的 .pyc 缓存文件 | 8845987 | git checkout HEAD~1 -- .gitignore |
 
-| 2026-09-09T15:00+08:00 | update | docs/superpowers/child-repo-guide.md | FAQ「换供应商」条目补充智谱（GLM）具体配置示例（AI_BASE_URL/AI_MODEL 示例值），呼应 issue #14 第 4 项延伸问题 | current | git checkout HEAD~1 -- docs/superpowers/child-repo-guide.md
+| 2026-09-09T15:00+08:00 | update | docs/superpowers/child-repo-guide.md | FAQ「换供应商」条目补充智谱（GLM）具体配置示例（AI_BASE_URL/AI_MODEL 示例值），呼应 issue #14 第 4 项延伸问题 | current | git checkout HEAD~1 -- docs/superpowers/child-repo-guide.md |
+
+| 2026-09-09T15:20+08:00 | update | docs/superpowers/tips.md + docs/superpowers/human-guide.md | 同步 AI 审查供应商三变量（AI_API_KEY/AI_BASE_URL/AI_MODEL）说明：tips.md 依赖表更新并新增「AI 审查供应商配置」权威表格（含 Secrets/Variables 标签区分提示与智谱示例值），human-guide Scripts 速查表对应行去 DeepSeek 单供应商表述——修复参数化后文档滞后（Driver 指出） | current | git checkout HEAD~1 -- docs/superpowers/tips.md docs/superpowers/human-guide.md

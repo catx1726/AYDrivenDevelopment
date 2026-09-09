@@ -178,4 +178,4 @@ git submodule add https://github.com/obra/superpowers.git skills/superpowers
 | `check-ops-changelog` | 代码变更时强制要求更新 `.project/ops_changelog.md` | 每次提交前（自动） | lefthook 自动调用 | 保证每次代码变更都有审计记录 |
 | `context-guard` | 上下文健康检查（--tokens 报告用量） | 每完成 3-5 个 subtask（AI 执行） | `bash scripts/context-guard.sh --tokens N` | ≥256k 防发散预警、≥128k 建议卸载 |
 | `sync-skills` | 将平台无关的 `skills/` 同步到 `.gemini/skills/` 等平台目录 | 修改 `skills/` 后手动运行 | `./scripts/sync-skills.sh`（或 `.ps1`） | `.gemini/skills/` 是副本，主库在 `skills/` |
-| `ai_reviewer` | 基于 DeepSeek API 对 PR 进行代码审查（需 `DEEPSEEK_API_KEY`） | CI 中自动触发 | GitHub Actions 自动调用 | 用标准文档统一审查尺度，减少人工漏检 |
+| `ai_reviewer` | AI 代码审查（供应商可配置，默认 DeepSeek，可换智谱等任意 OpenAI 兼容端点） | CI 中自动触发 | GitHub Actions 自动调用（凭据配置见 tips.md「AI 审查供应商配置」） | 用标准文档统一审查尺度，减少人工漏检 |
