@@ -174,8 +174,8 @@ git submodule add https://github.com/obra/superpowers.git skills/superpowers
 | `check-agents-md` | 检查 `AGENTS.md` 是否 ≤ 100 行 | 每次提交前（自动） | lefthook 自动调用 | 防止系统 prompt 膨胀，降低 Agent 推理质量 |
 | `check-docs-structure` | 检查 handoff/skill 文件的 front matter 完整性 | 每次提交前（自动） | lefthook 自动调用 | 确保 AI 上下文交接文档和技能文件可被正确解析 |
 | `forbid-destructive` | 在 diff 中检测 `rm -rf`、`git push --force`、`DROP TABLE` 等危险模式 | 每次提交前（自动） | lefthook 自动调用 | 拦截破坏性操作，要求 Driver 确认 |
-| `check-conventional-commit` | 检查 commit message 是否符合 `type(scope): description` 格式 | 每次提交前（自动） | lefthook 自动调用 | 生成标准化 CHANGELOG，便于追溯 |
-| `check-ops-changelog` | 代码变更时强制要求更新 `.project/ops_changelog.md` | 每次提交前（自动） | lefthook 自动调用 | 保证每次代码变更都有审计记录 |
+| `check-conventional-commit` | 检查 commit message 是否符合 `type(scope): description` 格式；**人机区分**：检测到 AI CLI 环境变量（`OPENCODE`/`CLAUDECODE`/`AGENT`/`CURSOR_AGENT`）时不合规则强制阻断，人工终端提交仅警告不阻断（可用 `AI_AGENT=1/0` 显式覆盖） | 每次提交前（自动） | lefthook 自动调用 | 生成标准化 CHANGELOG，便于追溯；同时不给人工日常提交增加负担 |
+| `check-ops-changelog` | 代码变更时要求更新 `.project/ops_changelog.md`；**人机区分**同上（AI 强制阻断，人工仅警告） | 每次提交前（自动） | lefthook 自动调用 | 保证 AI 自动化操作有审计记录；PR 层 `audit_check` CI 对所有人无差别强制兜底 |
 | `context-guard` | 上下文健康检查（--tokens 报告用量） | 每完成 3-5 个 subtask（AI 执行） | `bash scripts/context-guard.sh --tokens N` | ≥256k 防发散预警、≥128k 建议卸载 |
 | `sync-skills` | 将平台无关的 `skills/` 同步到 `.gemini/skills/` 等平台目录 | 修改 `skills/` 后手动运行 | `./scripts/sync-skills.sh`（或 `.ps1`） | `.gemini/skills/` 是副本，主库在 `skills/` |
 | `ai_reviewer` | AI 代码审查（供应商可配置，默认 DeepSeek，可换智谱等任意 OpenAI 兼容端点） | CI 中自动触发 | GitHub Actions 自动调用（凭据配置见 tips.md「AI 审查供应商配置」） | 用标准文档统一审查尺度，减少人工漏检 |
