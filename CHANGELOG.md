@@ -1,5 +1,9 @@
 # Unreleased
 
+### [2026-09-17] fix(hooks): 本地审计/提交规范检查按人机身份区分强制与警告级别 (#15)
+fix(hooks): 本地审计/提交规范检查按人机身份区分强制与警告级别
+
+
 ### [2026-05-28] refactor(docs): 修复 SSOT，README.md 替代 GETTING_STARTED.md (#12)
 refactor(docs): 修复 SSOT，README.md 替代 GETTING_STARTED.md
 
