@@ -136,31 +136,33 @@ AI 会先扫描代码、输出影响地图，然后根据文件数和架构变�
 
 按你的 AI 工具选择安装方式：
 
+按你的 AI 工具选择安装方式（覆盖上游 README 当前支持的全部 16 个 harness；一机多工具需分别安装）：
+
 | AI 工具 | 安装方式 |
 |---------|---------|
-| **Claude Code** | `/plugin install superpowers@claude-plugins-official` |
-| **Codex CLI** | `/plugins` → 搜索 `superpowers` → `Install Plugin` |
+| **Claude Code** | `/plugin install superpowers@claude-plugins-official`；或自建市场 `/plugin marketplace add obra/superpowers-marketplace` → `/plugin install superpowers@superpowers-marketplace` |
+| **Antigravity** | `agy plugin install https://github.com/obra/superpowers`（重跑同命令即更新） |
 | **Codex App** | 侧边栏 Plugins → Coding section → `+` next to Superpowers |
-| **Gemini CLI** | `gemini extensions install https://github.com/obra/superpowers` |
-| **OpenCode** | `Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md` |
+| **Codex CLI** | `/plugins` → 搜索 `superpowers` → `Install Plugin` |
 | **Cursor** | `/add-plugin superpowers` 或在 marketplace 搜索 |
-| **GitHub Copilot CLI** | `copilot plugin marketplace add obra/superpowers-marketplace` → `copilot plugin install superpowers@superpowers-marketplace` |
+| **Devin CLI** | `devin plugins install obra/superpowers`（更新：`devin plugins update superpowers`） |
 | **Factory Droid** | `droid plugin marketplace add https://github.com/obra/superpowers` → `droid plugin install superpowers@superpowers` |
+| **Gemini CLI** | `gemini extensions install https://github.com/obra/superpowers`（更新：`gemini extensions update superpowers`） |
+| **GitHub Copilot CLI** | `copilot plugin marketplace add obra/superpowers-marketplace` → `copilot plugin install superpowers@superpowers-marketplace` |
+| **Grok Build CLI** | `grok plugin install superpowers@xai-official --trust`，或 TUI 内 `/marketplace` 搜索安装 |
+| **Kimi Code** | `/plugins` → Marketplace → Superpowers；或 `/plugins install https://github.com/obra/superpowers` |
+| **OpenCode** | `Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md`（V2 需 2.0.4+） |
+| **Pi** | `pi install git:github.com/obra/superpowers`（本地开发：`pi -e /path/to/superpowers`） |
+| **Qwen Code** | `qwen extensions install obra/superpowers`（更新：`qwen extensions update superpowers`） |
+| **Hermes Agent** | `hermes plugins install obra/superpowers --enable`（安装后重启会话） |
+| **Muse** | `muse plugins install ./` → `muse plugins approve superpowers`，或 clone 后安装（更新：`muse plugins update superpowers`） |
 
-### 项目内集成（不支持插件市场时）
-
-```bash
-# 方式 1：直接克隆（推荐，简单）
-git clone https://github.com/obra/superpowers.git skills/superpowers
-
-# 方式 2：Git submodule（方便后续更新）
-git submodule add https://github.com/obra/superpowers.git skills/superpowers
-```
-
-> ⚠️ **注意**：Superpowers 的 skills 主要为 Claude Code / Codex CLI 设计，
-> 部分平台特定工具调用（如 `TodoWrite`、`Skill`）在不同 AI 工具间存在差异。
-> 以 Kimi Code CLI 为例，它会读取 SKILL.md 中的文本指令并执行，
-> 但特定工具行为会以纯文本形式完成。
+> ⚠️ **注意**：上游对全部 16 个 harness 提供原生插件适配，技能文本全平台通用；
+> 各工具的工具调用差异（todo/subagent/文件编辑等）由插件内置的按平台映射处理。
+> 早期的 `git clone` / git submodule 到 `skills/superpowers` 的项目内集成方式
+> 已不再是上游文档记载的安装路径（OpenCode 安装文档明确要求从旧 clone/symlink
+> 方式迁移到插件管理器安装）。上游更新频繁，安装命令以
+> https://github.com/obra/superpowers 的 README 为准。
 
 ---
 
