@@ -1,11 +1,29 @@
 ﻿# Generate Handoff — 生成标准化上下文交接文档 (PowerShell)
-# 用法: .\scripts\generate-handoff.ps1 <task-id> [status]
-# 示例: .\scripts\generate-handoff.ps1 T-123 in_progress
+# 用法: .\scripts\generate-handoff.ps1 <task-id> [status] [--session-id <id>] [--agent <agent@model>]
+# 示例: .\scripts\generate-handoff.ps1 T-123 in_progress --session-id ses_abc123 --agent opencode@glm-5.3-max
 
-$TASK_ID = $args[0]
+# 会话身份锚点（跨会话可寻址）：session_id/agent 可由参数或环境变量提供，cwd 自动记录
+$SESSION_ID = $null
+$AGENT = $null
+$POSITIONAL = @()
+for ($i = 0; $i -lt $args.Count; $i++) {
+    switch ($args[$i]) {
+        '--session-id' { $SESSION_ID = $args[$i + 1]; $i++ }
+        '--agent' { $AGENT = $args[$i + 1]; $i++ }
+        default { $POSITIONAL += $args[$i] }
+    }
+}
+if (-not $AGENT) {
+    if ($env:OPENCODE) { $AGENT = "opencode" }
+    elseif ($env:CLAUDECODE) { $AGENT = "claude-code" }
+    elseif ($env:CURSOR_AGENT) { $AGENT = "cursor" }
+}
+$CWD = (Get-Location).Path
+
+$TASK_ID = $POSITIONAL[0]
 if (-not $TASK_ID) { $TASK_ID = "TASK-UNKNOWN" }
 
-$STATUS = $args[1]
+$STATUS = $POSITIONAL[1]
 if (-not $STATUS) { $STATUS = "in_progress" }
 
 $TIMESTAMP = Get-Date -Format "yyyyMMdd-HHmmss"
@@ -17,6 +35,9 @@ New-Item -ItemType Directory -Force -Path "docs/superpowers/handoffs" | Out-Null
 $CONTENT = @"
 ---
 handoff_id: ${TASK_ID}-${TIMESTAMP}
+session_id: $(if ($SESSION_ID) { $SESSION_ID } else { '<未提供，回查 AI 本地会话存储>' })
+agent: $(if ($AGENT) { $AGENT } else { '<未识别>' })
+cwd: ${CWD}
 source_session: $env:USERNAME@$env:COMPUTERNAME
 target_session: <新会话标识>
 status: ${STATUS}

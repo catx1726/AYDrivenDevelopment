@@ -78,3 +78,14 @@ sequenceDiagram
 | 14 | 反馈与反思 | `perform_self_reflection` | ops_changelog 更新 |
 | 14.1 | 棘手问题归档 | `docs/playbooks/README.md` | Debugging Recipe |
 | 14.2 | 母库反馈（子库会话） | `child-repo-guide.md` §7 | 母库反馈 issue 草稿 |
+
+## 里程碑收尾固定动作（执行 session 义务，无需 Driver 口述）
+
+到达里程碑边界（进入阶段 10 提纯前）时，AI 必须逐项完成并汇报，缺一不得放行下一里程碑：
+
+1. **证据输出**：三层验证证据（Layer 1 CI/Hook → Layer 2 Generator 自检 → Layer 3 Evaluator）已落盘可复查
+2. **handoff 结论行**：`docs/superpowers/handoffs/` 交接文档更新——结论、文件地图、身份锚点（session_id/agent/cwd）齐备；INDEX 中 status 置 `active`（归档时置 `archived`，退出会话必读链）
+3. **计划 Task 勾选**：Plan 文件任务逐项核对勾选，与实际交付一致
+4. **计划外交付物归档**：超出 Plan 范围新增的交付物（脚本/测试/文档）同样写入 handoff 文件地图，附「怎么跑、覆盖什么」，不留存于会话记忆
+5. **未拍板事项声明**：对 Spec 未明确的点若按默认值先行实施，显式列出默认值及依据
+6. **汇报后暂停**：完成后向 Driver 汇报并暂停；**Driver 明确批准前不进入下一里程碑编码**——一般性「测试没问题」不等于里程碑批准，AI 应主动确认边界语义

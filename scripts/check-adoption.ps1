@@ -56,10 +56,45 @@ if (Get-Command python3 -ErrorAction SilentlyContinue) {
 }
 
 Write-Host ""
-Write-Host "[3/3] AI 端（无法自动检测，请 AI/开发者自查）"
-Write-Host "  ℹ️ Superpowers 技能由你的 AI CLI 插件提供，生命周期（brainstorming/"
-Write-Host "     writing-plans/TDD 等）依赖它。安装方式见母库 docs/superpowers/"
-Write-Host "     human-guide.md §6。未安装时 AI 会退化为纯文本流程，质量下降。"
+Write-Host "[3/3] AI 端 Superpowers 插件探测（文件级只读，不阻塞自检）"
+$SP_DETECTED = $false
+
+# OpenCode：V1 配置键名 plugin / V2（2.0.4+）键名 plugins；全局与项目级配置都查
+$ocFiles = @(
+    (Join-Path $HOME '.config/opencode/opencode.json'),
+    (Join-Path $HOME '.config/opencode/opencode.jsonc'),
+    (Join-Path (Get-Location) 'opencode.json'),
+    (Join-Path (Get-Location) 'opencode.jsonc')
+) | Where-Object { Test-Path $_ }
+if ($ocFiles) {
+    $ocContent = ($ocFiles | ForEach-Object { Get-Content $_ -Raw }) -join "`n"
+    if ($ocContent -match '"plugins?"\s*:\s*\[[^\]]*superpowers') {
+        Write-Host "  ✅ Superpowers 已配置（opencode）"
+        $SP_DETECTED = $true
+    } else {
+        Write-Host "  ⚠️ 未检测到 Superpowers 插件（opencode）。完整生命周期（brainstorming/writing-plans/TDD）依赖它。安装："
+        Write-Host '     opencode.json 加入：{ "plugins": ["superpowers@git+https://github.com/obra/superpowers.git"] }（V1 键名为 "plugin"）'
+        Write-Host '     重启后验证："Tell me about your superpowers"；Windows 安装问题见上游 docs/README.opencode.md 的 Troubleshooting'
+        $SP_DETECTED = $true
+    }
+}
+
+# Claude Code：插件配置目录中出现 superpowers 即视为已安装
+$ccPluginDir = Join-Path $HOME '.claude/plugins'
+if (Test-Path $ccPluginDir) {
+    $ccHit = Get-ChildItem $ccPluginDir -Recurse -Filter *.json -ErrorAction SilentlyContinue |
+        Where-Object { (Get-Content $_.FullName -Raw -ErrorAction SilentlyContinue) -match 'superpowers' }
+    if ($ccHit) {
+        Write-Host "  ✅ Superpowers 已安装（claude code）"
+        $SP_DETECTED = $true
+    }
+}
+
+if (-not $SP_DETECTED) {
+    Write-Host "  ℹ️ 未能按平台文件级探测 Superpowers（Claude Code 请用 /plugin 查看；其余平台按各自插件机制安装）。"
+    Write-Host "     完整生命周期（brainstorming/writing-plans/TDD 等）依赖它，安装方式见母库 docs/superpowers/"
+    Write-Host "     human-guide.md §6。未安装时 AI 会退化为纯文本流程，质量下降。"
+}
 
 Write-Host ""
 if ($MISSING_ASSETS -eq 1 -or $MISSING_TOOLS -ne 0) {

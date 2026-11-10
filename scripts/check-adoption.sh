@@ -54,10 +54,40 @@ else
 fi
 
 echo ""
-echo "[3/3] AI 端（无法自动检测，请 AI/开发者自查）"
-echo "  ℹ️ Superpowers 技能由你的 AI CLI 插件提供，生命周期（brainstorming/"
-echo "     writing-plans/TDD 等）依赖它。安装方式见母库 docs/superpowers/"
-echo "     human-guide.md §6。未安装时 AI 会退化为纯文本流程，质量下降。"
+echo "[3/3] AI 端 Superpowers 插件探测（文件级只读，不阻塞自检）"
+SP_DETECTED=0
+
+# OpenCode：V1 配置键名 plugin / V2（2.0.4+）键名 plugins；全局与项目级配置都查
+OC_FILES=""
+for f in "$HOME/.config/opencode/opencode.json" "$HOME/.config/opencode/opencode.jsonc" "./opencode.json" "./opencode.jsonc"; do
+  [ -f "$f" ] && OC_FILES="$OC_FILES $f"
+done
+if [ -n "$OC_FILES" ]; then
+  # JSON 数组可能跨行，先压平再匹配
+  if cat $OC_FILES | tr -d '\n' | grep -qE '"plugins?"[[:space:]]*:[[:space:]]*\[[^]]*superpowers'; then
+    echo "  ✅ Superpowers 已配置（opencode）"
+    SP_DETECTED=1
+  else
+    echo "  ⚠️ 未检测到 Superpowers 插件（opencode）。完整生命周期（brainstorming/writing-plans/TDD）依赖它。安装："
+    echo '     opencode.json 加入：{ "plugins": ["superpowers@git+https://github.com/obra/superpowers.git"] }（V1 键名为 "plugin"）'
+    echo '     重启后验证："Tell me about your superpowers"；Windows 安装问题见上游 docs/README.opencode.md 的 Troubleshooting'
+    SP_DETECTED=1
+  fi
+fi
+
+# Claude Code：插件配置目录中出现 superpowers 即视为已安装
+if [ -d "$HOME/.claude/plugins" ]; then
+  if grep -rqs --include='*.json' 'superpowers' "$HOME/.claude/plugins" 2>/dev/null | grep -q .; then
+    echo "  ✅ Superpowers 已安装（claude code）"
+    SP_DETECTED=1
+  fi
+fi
+
+if [ "$SP_DETECTED" -eq 0 ]; then
+  echo "  ℹ️ 未能按平台文件级探测 Superpowers（Claude Code 请用 /plugin 查看；其余平台按各自插件机制安装）。"
+  echo "     完整生命周期（brainstorming/writing-plans/TDD 等）依赖它，安装方式见母库 docs/superpowers/"
+  echo "     human-guide.md §6。未安装时 AI 会退化为纯文本流程，质量下降。"
+fi
 
 echo ""
 if [ "$MISSING_ASSETS" -eq 1 ] || [ "$MISSING_TOOLS" -ne 0 ]; then

@@ -18,8 +18,10 @@ if (-not $TOKENS -and $env:CONTEXT_TOKENS) { $TOKENS = "$env:CONTEXT_TOKENS" }
 if ($TOKENS -and $TOKENS -notmatch '^\d+$') { $TOKENS = $null }
 if ($TOKENS) { $TOKENS_TEXT = $TOKENS } else { $TOKENS_TEXT = "not reported" }
 
-# 1. 计算已修改文件数
-$MODIFIED = (git status --short 2>$null | Measure-Object).Count
+# 1. 计算已修改文件数（排除 scripts//.github//lefthook.yml 等接入资产——
+#    母库拷贝类变更不代表会话发散，避免接入后首个任务误报 RESET）
+$RAW_MODIFIED = git status --short 2>$null
+$MODIFIED = ($RAW_MODIFIED | Where-Object { $_ -notmatch '\s("?(scripts/|\.github/|lefthook\.yml))' } | Measure-Object).Count
 
 # 2. 计算已耗时（分钟）；session 文件缺失或为未初始化占位符时视为未知
 $ELAPSED_MIN = -1

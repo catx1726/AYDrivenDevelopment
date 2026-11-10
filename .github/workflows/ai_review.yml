@@ -43,4 +43,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           filePath: review_result.md
-          comment_tag: ai_code_review
+          # 不设 comment_tag：每轮审查发布独立新评论，保留多轮审查历史（同 tag 默认 edit-mode: replace 会原地覆盖旧报告）

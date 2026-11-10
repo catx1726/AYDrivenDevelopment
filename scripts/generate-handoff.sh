@@ -2,11 +2,30 @@
 set -e
 
 # Generate Handoff — 生成标准化上下文交接文档
-# 用法: bash scripts/generate-handoff.sh <task-id> [status]
-# 示例: bash scripts/generate-handoff.sh T-123 in_progress
+# 用法: bash scripts/generate-handoff.sh <task-id> [status] [--session-id <id>] [--agent <agent@model>]
+# 示例: bash scripts/generate-handoff.sh T-123 in_progress --session-id ses_abc123 --agent opencode@glm-5.3-max
 
-TASK_ID="${1:-TASK-UNKNOWN}"
-STATUS="${2:-in_progress}"
+# 会话身份锚点（跨会话可寻址）：session_id/agent 可由参数或环境变量提供，cwd 自动记录
+SESSION_ID=""
+AGENT=""
+ARGS=()
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --session-id) SESSION_ID="$2"; shift 2 ;;
+    --agent) AGENT="$2"; shift 2 ;;
+    *) ARGS+=("$1"); shift ;;
+  esac
+done
+if [ -z "$AGENT" ]; then
+  if [ -n "$OPENCODE" ]; then AGENT="opencode"
+  elif [ -n "$CLAUDECODE" ]; then AGENT="claude-code"
+  elif [ -n "$CURSOR_AGENT" ]; then AGENT="cursor"
+  fi
+fi
+CWD="$(pwd)"
+
+TASK_ID="${ARGS[0]:-TASK-UNKNOWN}"
+STATUS="${ARGS[1]:-in_progress}"
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 DATE=$(date +%Y-%m-%d)
 FILENAME="docs/superpowers/handoffs/${TASK_ID}-${TIMESTAMP}.md"
@@ -16,6 +35,9 @@ mkdir -p docs/superpowers/handoffs
 cat > "$FILENAME" <<EOF
 ---
 handoff_id: ${TASK_ID}-${TIMESTAMP}
+session_id: ${SESSION_ID:-<未提供，回查 AI 本地会话存储>}
+agent: ${AGENT:-<未识别>}
+cwd: ${CWD}
 source_session: $(whoami)@$(hostname)
 target_session: <新会话标识>
 status: ${STATUS}

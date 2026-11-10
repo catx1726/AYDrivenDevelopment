@@ -102,6 +102,11 @@ New-Item -ItemType Directory -Force -Path "docs\playbooks", ".project\distill_st
 - `docs/superpowers/decisions/INDEX.md`：内容一行 `# Decision 索引`
 - `.project/ops_changelog.md`：复制 `<SOP-HOME>/.project/ops_changelog.md` 的**表头**（前 4 行）作为初始审计日志
 
+> **审计日志回填惯例**（三段式时序）：审计条目引用其所在 commit 自身的 hash，自引用无法一次完成——
+> ① 代码 commit（日志条目随代码入库，Commit_ID 写占位符 `current` 或 `TBD`）→
+> ② 记下该 commit hash → ③ 追加一个 `docs: ops_changelog 回填 <hash>` commit，把占位符替换为真实 hash。
+> 占位符不影响钩子与 CI 校验，回填仅为可追溯性义务，勿遗漏。
+
 **必做**：复制 `CHANGELOG.md`（PR 合并后 `close_loop` 向其追加；即使忘记复制，CI 也会自动初始化兜底，
 但建议复制以获得既有格式）。同时检查 `.gitignore`：若为 Eclipse 惯例忽略了 `.project`
 （Java 项目常见），必须追加反向排除 `!/.project/`，否则审计日志永远无法入库、审计钩子持续失败
@@ -166,6 +171,18 @@ New-Item -ItemType Directory -Force -Path "docs\playbooks", ".project\distill_st
 | 读 | <SOP-HOME>：AGENTS.md、docs/standards/、docs/domain/、skills/、docs/superpowers/*.md（规范文件） |
 | 写 | 子库：docs/superpowers/{specs,plans,handoffs,decisions,evaluator-handoffs}/、docs/playbooks/、.project/、CHANGELOG.md |
 | 子库持有 | scripts/、lefthook.yml、.github/ |
+
+## 会话最小读集（角色路由——AGENTS.md 是路由器不是内容库）
+
+| 会话角色 | 必读（仅 2-3 个文件，其余按需检索） |
+|----------|-------------------------------------|
+| 执行 | 最新 active handoff + 当前里程碑 Plan |
+| 验收复核 | Plan + 三层验证证据入口 |
+| 联调 | 最新 handoff 的文件地图 + 相关决策归档 |
+| 架构决策 | 当前 Spec + decisions/INDEX |
+
+- handoff INDEX 以 status（active/archived）标记，过期 handoff 退出必读链
+- 反模式：禁止写「★ 会话必读：spec → feasibility → decisions 全链」——每会话全量啃文档 3-5k tokens 起步，压缩时压掉的恰是历史探索过程
 ```
 
 ## 5. 升级同步
@@ -182,6 +199,7 @@ New-Item -ItemType Directory -Force -Path "docs\playbooks", ".project\distill_st
 |------|-----------|
 | AI 报规范文件不存在（404） | 把 `<SOP-HOME>/docs/...` 误解析到子库 CWD——重申路径解析规则 §4 |
 | 产物被写进母库 | AI 在母库 CWD 执行了脚本——删除误写文件，提醒 AI「产物写当前子库」 |
+| 跨会话回溯找不到历史调研来源 | handoff 只写了泛化来源名（如 `opencode@app brainstorming 会话`），无可寻址 ID——用 `generate-handoff --session-id ses_xxx --agent opencode@模型` 生成 front matter 身份锚点（session_id/agent/cwd），勿手写泛化描述 |
 | 提交无任何 hook 检查 | Step 4 未在子库执行，或子库缺 Node.js/lefthook |
 | 子库 CI 报 `scripts/ai_reviewer.py` 缺失 | Step 1 未执行或 `.github/`、`scripts/` 未提交到子库 |
 | `check-ops-changelog` 拦截提交 | 子库 `.project/ops_changelog.md` 未随代码变更更新（Step 2 骨架缺失也会导致）。**注**：本地 hook 仅在 AI CLI 环境（`OPENCODE`/`CLAUDECODE`/`AGENT`/`CURSOR_AGENT` 等环境变量存在）下强制阻断，人工终端提交仅警告放行；但 PR 层 `audit_check` CI 对所有人无差别强制检查，不能靠本地放行绕过合入门禁 |
