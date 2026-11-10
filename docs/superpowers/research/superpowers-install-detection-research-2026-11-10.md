@@ -49,7 +49,9 @@
 - 探测脚本**只读**，绝不写任何 harness 配置（与 porting「绝不改用户全局配置」同源）；
 - 启发式扫描**刻意排除** sessions/projects/history 等转录目录——历史会话讨论过
   superpowers 会产生误报；
-- 自动安装永远归 Driver 手动（AGENTS.md 人机分工契约）。
+- 未经 Driver 授权不得自动安装：交互型安装（`/plugin install` 等斜杠命令）物理上只有
+  Driver 能执行；配置型安装（OpenCode 改 opencode.json）须 Driver 明确授权后 AI 方可
+  按上游官方指引代办（人机分工契约，2026-11-10 Driver 决策：按平台区分）。
 
 ## 6. 落地
 

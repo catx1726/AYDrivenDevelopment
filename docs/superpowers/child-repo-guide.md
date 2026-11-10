@@ -46,9 +46,12 @@
 以下命令中 `<SOP-HOME>` 替换为母库本地实际路径。
 
 > **人机分工**：复制文件、创建骨架、编写 AGENTS.md 可由 AI 或人执行；
-> **必须 Driver 手动**的操作（交互式/浏览器/系统级）：安装 git/Node.js/GitHub CLI、
-> `gh auth login`、安装 Superpowers 插件、放宽 PowerShell 执行策略、配置仓库 Secrets/Variables。
-> AI 遇到这些步骤应明确转交 Driver，不要尝试代办。
+> **必须 Driver 执行**的操作（交互式/浏览器/系统级）：安装 git/Node.js/GitHub CLI、
+> `gh auth login`、市场型 Superpowers 插件安装（`/plugin install` 等斜杠命令，
+> AI 物理上无法代办）、放宽 PowerShell 执行策略、配置仓库 Secrets/Variables。
+> **配置型安装可授权 AI 代办**：OpenCode 等「编辑配置文件」型平台，Driver 明确授权后
+> AI 可按 human-guide.md §6 该平台的官方指引执行（如 OpenCode 按上游 INSTALL.md
+> 修改 opencode.json）。AI 遇到交互式步骤应明确转交 Driver，未经授权不代办。
 
 ### Step 0: 运行前置自检（每次会话开始时也可复跑）
 
