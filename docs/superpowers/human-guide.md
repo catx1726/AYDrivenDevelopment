@@ -13,7 +13,9 @@
 
 模式 A 下，根据你的 AI 平台做一次性配置：
 
-> **工具前提（两种模式通用）**：Issue/PR 环节依赖 GitHub CLI——安装与认证见 `docs/superpowers/tips.md` →「前提：GitHub CLI 安装与认证」。
+> **工具前提（两种模式通用，缺一不可）**：
+> 1. Issue/PR 环节依赖 GitHub CLI——安装与认证见 `docs/superpowers/tips.md` →「前提：GitHub CLI 安装与认证」
+> 2. 完整生命周期技能（brainstorming/writing-plans/TDD 等）依赖 **Superpowers 插件**——按 AI 平台安装见下方 §6「安装 Superpowers」（运行 `check-adoption` 自检会探测并提示缺失）
 
 | 平台 | 配置步骤 |
 |------|---------|
