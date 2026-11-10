@@ -55,6 +55,7 @@ fi
 
 echo ""
 echo "[3/3] AI 端 Superpowers 插件探测（文件级只读，不阻塞自检）"
+# 探测矩阵与逻辑边界见 docs/superpowers/research/superpowers-install-detection-research-2026-11-10.md
 SP_DETECTED=0
 
 # OpenCode：V1 配置键名 plugin / V2（2.0.4+）键名 plugins；全局与项目级配置都查
@@ -77,11 +78,52 @@ fi
 
 # Claude Code：插件配置目录中出现 superpowers 即视为已安装
 if [ -d "$HOME/.claude/plugins" ]; then
-  if grep -rqs --include='*.json' 'superpowers' "$HOME/.claude/plugins" 2>/dev/null | grep -q .; then
+  # 注意：-q 抑制输出，直接用退出码判断，不可管道给 grep -q .
+  if grep -rqs --include='*.json' 'superpowers' "$HOME/.claude/plugins" 2>/dev/null; then
     echo "  ✅ Superpowers 已安装（claude code）"
     SP_DETECTED=1
   fi
 fi
+
+# Gemini CLI / Qwen Code（qwen 为 gemini-cli fork，扩展布局相同）：extensions/ 下出现 superpowers 目录
+for pair in "gemini:$HOME/.gemini/extensions" "qwen:$HOME/.qwen/extensions"; do
+  sp_name="${pair%%:*}"; sp_dir="${pair#*:}"
+  if [ -d "$sp_dir" ] && ls "$sp_dir" 2>/dev/null | grep -qi superpowers; then
+    echo "  ✅ Superpowers 已安装（${sp_name} extensions/）"
+    SP_DETECTED=1
+  fi
+done
+
+# 项目内安装痕迹（旧 clone/submodule/npm 兜底方式）
+if [ -d skills/superpowers ] || [ -d node_modules/superpowers ]; then
+  echo "  ✅ Superpowers 已安装（项目内 skills/ 或 node_modules/）"
+  SP_DETECTED=1
+fi
+
+# 启发式扫描其余 harness：只查其插件/扩展子目录与顶层配置文件中的肯定信号
+# （刻意不扫 sessions/projects/history 等转录目录——历史会话提过 superpowers 会误报；
+#   未检出≠未安装，最终仍降级为通用提示）
+for h in codex cursor copilot factory kimi grok devin antigravity pi hermes muse; do
+  sp_home="$HOME/.$h"
+  [ -d "$sp_home" ] || continue
+  sp_hit=""
+  for sub in plugins extensions; do
+    if [ -d "$sp_home/$sub" ] && grep -rqs --include='*.json' --include='*.toml' 'superpowers' "$sp_home/$sub" 2>/dev/null; then
+      sp_hit="$sp_home/$sub"; break
+    fi
+  done
+  if [ -z "$sp_hit" ]; then
+    for cf in config.json config.toml settings.json; do
+      if [ -f "$sp_home/$cf" ] && grep -qs 'superpowers' "$sp_home/$cf" 2>/dev/null; then
+        sp_hit="$sp_home/$cf"; break
+      fi
+    done
+  fi
+  if [ -n "$sp_hit" ]; then
+    echo "  ✅ Superpowers 已安装（$h）"
+    SP_DETECTED=1
+  fi
+done
 
 if [ "$SP_DETECTED" -eq 0 ]; then
   echo "  ℹ️ 未能按平台文件级探测 Superpowers（Claude Code 请用 /plugin 查看；其余平台按各自插件机制安装）。"

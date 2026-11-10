@@ -57,6 +57,7 @@ if (Get-Command python3 -ErrorAction SilentlyContinue) {
 
 Write-Host ""
 Write-Host "[3/3] AI 端 Superpowers 插件探测（文件级只读，不阻塞自检）"
+# 探测矩阵与逻辑边界见 docs/superpowers/research/superpowers-install-detection-research-2026-11-10.md
 $SP_DETECTED = $false
 
 # OpenCode：V1 配置键名 plugin / V2（2.0.4+）键名 plugins；全局与项目级配置都查
@@ -86,6 +87,48 @@ if (Test-Path $ccPluginDir) {
         Where-Object { (Get-Content $_.FullName -Raw -ErrorAction SilentlyContinue) -match 'superpowers' }
     if ($ccHit) {
         Write-Host "  ✅ Superpowers 已安装（claude code）"
+        $SP_DETECTED = $true
+    }
+}
+
+# Gemini CLI / Qwen Code（qwen 为 gemini-cli fork，扩展布局相同）：extensions/ 下出现 superpowers 目录
+foreach ($pair in @(@('gemini', (Join-Path $HOME '.gemini/extensions')), @('qwen', (Join-Path $HOME '.qwen/extensions')))) {
+    $spName = $pair[0]; $spDir = $pair[1]
+    if ((Test-Path $spDir) -and (Get-ChildItem $spDir -ErrorAction SilentlyContinue | Where-Object { $_.Name -match 'superpowers' })) {
+        Write-Host "  ✅ Superpowers 已安装（${spName} extensions/）"
+        $SP_DETECTED = $true
+    }
+}
+
+# 项目内安装痕迹（旧 clone/submodule/npm 兜底方式）
+if ((Test-Path skills/superpowers) -or (Test-Path node_modules/superpowers)) {
+    Write-Host "  ✅ Superpowers 已安装（项目内 skills/ 或 node_modules/）"
+    $SP_DETECTED = $true
+}
+
+# 启发式扫描其余 harness：只查其插件/扩展子目录与顶层配置文件中的肯定信号
+# （刻意不扫 sessions/projects/history 等转录目录——历史会话提过 superpowers 会误报；
+#   未检出≠未安装，最终仍降级为通用提示）
+foreach ($h in @('codex','cursor','copilot','factory','kimi','grok','devin','antigravity','pi','hermes','muse')) {
+    $spHome = Join-Path $HOME ".$h"
+    if (-not (Test-Path $spHome)) { continue }
+    $spHit = $null
+    foreach ($sub in @('plugins','extensions')) {
+        $subDir = Join-Path $spHome $sub
+        if (Test-Path $subDir) {
+            $spHit = Get-ChildItem $subDir -Recurse -Include *.json,*.toml -ErrorAction SilentlyContinue |
+                Select-String -Pattern 'superpowers' -List -ErrorAction SilentlyContinue | Select-Object -First 1
+            if ($spHit) { break }
+        }
+    }
+    if (-not $spHit) {
+        foreach ($cf in @('config.json','config.toml','settings.json')) {
+            $cfPath = Join-Path $spHome $cf
+            if ((Test-Path $cfPath) -and (Select-String -Path $cfPath -Pattern 'superpowers' -Quiet)) { $spHit = $cfPath; break }
+        }
+    }
+    if ($spHit) {
+        Write-Host "  ✅ Superpowers 已安装（$h）"
         $SP_DETECTED = $true
     }
 }
